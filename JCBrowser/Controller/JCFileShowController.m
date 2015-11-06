@@ -23,6 +23,7 @@
 @property (nonatomic, strong) NSMutableArray  *imageArray;
 @property (nonatomic, assign) NSInteger        fileIndex;
 @property (nonatomic, strong) UIBarButtonItem *item;
+@property (nonatomic, strong) UIButton        *delete;
 
 @end
 
@@ -112,6 +113,17 @@
     }
 }
 
+- (void)delete_action:(UIButton *)sender {
+    BOOL isd = [self.fileManager deleteFile:self.imageSee.dic[@"image"]];
+    if (isd) {
+        [self obtainFilesArray];
+        self.imageSee.arrImage = self.imageArray;
+        [self.filesTable reloadFiles:self.filesArray];
+        [self.imageSee performSelectorOnMainThread:@selector(reloadImageView) withObject:nil waitUntilDone:NO];
+        [AlertHelper showOneSecond:@"删除成功！" andDelegate:self.view];
+    }
+}
+
 #pragma mark - 视图创建
 
 - (void)createNavigationWithBarButtonItem {
@@ -140,6 +152,17 @@
         _fileManager = [JCFileManager sharedFileManager];
     }
     return _fileManager;
+}
+
+- (UIButton *)delete {
+    if (!_delete) {
+        _delete = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        _delete.backgroundColor = [UIColor colorWithWhite:0.802 alpha:0.500];
+        [_delete setTitle:@"X" forState:UIControlStateNormal];
+        _delete.frame = CGRectMake(self.view.frame.size.width-30, 0, 30, 30);
+        [_delete addTarget:self action:@selector(delete_action:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _delete;
 }
 
 @end

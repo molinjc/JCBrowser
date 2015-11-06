@@ -14,6 +14,22 @@
 @property(nonatomic,strong)UIImageView *imgV;//图片视图
 @property(nonatomic,strong)UILabel *lblTally;//张数描述
 @property(nonatomic,strong)UILabel *lblInfo;//图片描述
--(instancetype)initWithFrame:(CGRect)frame andImageArray:(NSArray *)arrImage;//初始化方法
+
+/**
+ *  初始化方法
+ */
+-(instancetype)initWithFrame:(CGRect)frame andImageArray:(NSArray *)arrImage;
+
+/**
+ *  根据图片地址展示图片
+ *
+ *  @param path 图片地址
+ */
 - (void)showToImageWithPath:(NSString *)path;
+
+/**
+ *  刷新视图
+ */
+- (void)reloadImageView;
+
 @end

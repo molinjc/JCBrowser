@@ -133,9 +133,13 @@
 - (void)downloaderWebAllImage:(UIWebView *)webView {
     NSString *allImageAddressWithString = [webView stringByEvaluatingJavaScriptFromString:[self createImgArrayJavaScript]];
     NSArray *allImageAddressWithArray = [allImageAddressWithString componentsSeparatedByString:@";"];
-    for (int i=0; i<allImageAddressWithArray.count; i++) {
-        [self downloaderFileWithUrl:allImageAddressWithArray[i]];
-    }
+    // 多线程 --- 异步
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(queue, ^{
+        for (int i=0; i<allImageAddressWithArray.count; i++) {
+            [self downloaderFileWithUrl:allImageAddressWithArray[i]];
+        }
+    });
 }
 
 /**

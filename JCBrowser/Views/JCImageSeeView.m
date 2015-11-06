@@ -32,16 +32,45 @@
     return self;
 }
 
+/**
+ *  根据图片地址展示图片
+ *
+ *  @param path 图片地址
+ */
 - (void)showToImageWithPath:(NSString *)path {
     for (int i=0; i<self.arrImage.count; i++) {
         NSString *imagePath = self.arrImage[i][@"image"];
         if ([imagePath isEqualToString:path]) {
             self.tally = i;
             self.dic = self.arrImage[self.tally];//获取字典
-            self.imgV.image = [self imageWithPath:self.dic[@"image"]];//重新给图片视图指定图片
+            [self setImageViewFrameWithPath:self.dic[@"image"]];//重新给图片视图指定图片
             self.lblTally.text = [NSString stringWithFormat:@"%ld/%lu",self.tally+1,(unsigned long)self.arrImage.count];
             self.lblInfo.text = self.dic[@"info"];
             break;
+        }
+    }
+}
+
+/**
+ *  刷新视图
+ */
+- (void)reloadImageView {
+    if (self.tally < self.arrImage.count) {
+        self.dic = self.arrImage[self.tally];//获取字典
+        [self setImageViewFrameWithPath:self.dic[@"image"]];//重新给图片视图指定图片
+        self.lblTally.text = [NSString stringWithFormat:@"%ld/%lu",self.tally+1,(unsigned long)self.arrImage.count];
+        self.lblInfo.text = self.dic[@"info"];
+    }else {
+        self.tally = 0;
+        if (self.arrImage.count > 0) {
+            self.dic = self.arrImage[self.tally];//获取字典
+            [self setImageViewFrameWithPath:self.dic[@"image"]];//重新给图片视图指定图片
+            self.lblTally.text = [NSString stringWithFormat:@"%ld/%lu",self.tally+1,(unsigned long)self.arrImage.count];
+            self.lblInfo.text = self.dic[@"info"];
+        }else {
+            self.imgV.image = [UIImage imageNamed:@""];
+            self.lblTally.text = @"0/0";
+            self.lblInfo.text = @"";
         }
     }
 }
@@ -53,14 +82,13 @@
     
     self.dic = self.arrImage[self.tally];//读取数组第一个字典
     
-    self.imgV = [[UIImageView alloc]initWithFrame:CGRectMake(0, 84, self.frame.size.width, self.frame.size.height-120)];
-    
-    self.imgV.image = [self imageWithPath:self.dic[@"image"]];//从字典读取图片
-    
+    self.imgV = [[UIImageView alloc]init];
     
     [self addSubview:self.imgV];
     
     self.imgV.userInteractionEnabled = YES;//设置用户交互
+    
+    [self setImageViewFrameWithPath:self.dic[@"image"]];
     
 //    imgV.multipleTouchEnabled = YES;//设置多点触控开关
     
@@ -88,6 +116,11 @@
     [self addSubview:self.lblInfo];
 }
 
+/**
+ *  根据图片路径创建UIImage
+ *
+ *  @param path 图片路径
+ */
 - (UIImage *)imageWithPath:(NSString *)path {
     NSFileManager *fileManage = [NSFileManager defaultManager];
     
@@ -116,7 +149,7 @@
             self.tally += 1;
         }
         self.dic = self.arrImage[self.tally];//获取字典
-        self.imgV.image = [self imageWithPath:self.dic[@"image"]];//重新给图片视图指定图片
+        [self setImageViewFrameWithPath:self.dic[@"image"]];
         self.lblTally.text = [NSString stringWithFormat:@"%ld/%lu",self.tally+1,(unsigned long)self.arrImage.count];
         self.lblInfo.text = self.dic[@"info"];
     }else if(cu.x < self.frame.size.width/2){
@@ -126,10 +159,31 @@
            self.tally -= 1;
         }
         self.dic = self.arrImage[self.tally];
-        self.imgV.image = [self imageWithPath:self.dic[@"image"]];
+        [self setImageViewFrameWithPath:self.dic[@"image"]];
         self.lblTally.text = [NSString stringWithFormat:@"%ld/%lu",self.tally+1,(unsigned long)self.arrImage.count];
         self.lblInfo.text = self.dic[@"info"];
     }
+}
+
+/**
+ *  根据图片大小摆放位置
+ *
+ *  @param path 图片路径
+ */
+- (void)setImageViewFrameWithPath:(NSString *)path {
+    UIImage *image = [self imageWithPath:path];//重新给图片视图指定图片
+    CGFloat width = self.frame.size.width;
+    CGFloat height = self.frame.size.height;
+    if (image.size.width < width) {
+        width = image.size.width;
+    }
+    if (image.size.height < height) {
+        height = image.size.height;
+    }
+    
+    self.imgV.frame = CGRectMake(0, 0, width, height);
+    self.imgV.center = self.center;
+    self.imgV.image = image;
 }
 
 /*
