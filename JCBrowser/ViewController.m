@@ -18,16 +18,12 @@
 
 @interface ViewController ()<JCBarViewDelegate,UIWebViewDelegate,NSURLConnectionDelegate,UIGestureRecognizerDelegate>
 
-@property (nonatomic, strong) JCBarView *barview;
-
-@property (nonatomic, strong) UIWebView *webview;
-
-@property (nonatomic, strong) UIButton *hideButton;
-
-@property (nonatomic, assign) BOOL     isTo;
-
-@property (nonatomic, copy)   NSString  *name;
-
+@property (nonatomic, strong) JCBarView               *barview;
+@property (nonatomic, strong) UIWebView               *webview;
+@property (nonatomic, strong) UIButton                *hideButton;
+@property (nonatomic, strong) UIButton                *holdUrl;
+@property (nonatomic, assign) BOOL                     isTo;
+@property (nonatomic, copy)   NSString                *name;
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
 
 @end
@@ -40,6 +36,7 @@
     [self.view addSubview:self.webview];
     [self.view addSubview:self.activityIndicator];
     [self.webview addSubview:self.hideButton];
+    [self.webview addSubview:self.holdUrl];
     self.isTo = NO;
     self.name = @"";
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.baidu.com"]];
@@ -134,12 +131,12 @@
     NSString *allImageAddressWithString = [webView stringByEvaluatingJavaScriptFromString:[self createImgArrayJavaScript]];
     NSArray *allImageAddressWithArray = [allImageAddressWithString componentsSeparatedByString:@";"];
     // 多线程 --- 异步
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    dispatch_async(queue, ^{
+   // dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    //dispatch_async(queue, ^{
         for (int i=0; i<allImageAddressWithArray.count; i++) {
             [self downloaderFileWithUrl:allImageAddressWithArray[i]];
         }
-    });
+   // });
 }
 
 /**
@@ -153,7 +150,7 @@
     // 文件保存到什么地方
     NSString *caches = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
     NSArray *arr = [url componentsSeparatedByString:@"/"];
-    NSString *filepath = [caches stringByAppendingPathComponent:[NSString stringWithFormat:@"image/%@",arr[arr.count-1]]];
+    NSString *filepath = [caches stringByAppendingPathComponent:arr[arr.count-1]];
     fmd.destPath = filepath;
     [fmd start];
 }
@@ -240,6 +237,13 @@
     //[self.webview reload]; //重载 --- 刷新
 }
 
+- (void)holdUrl_action:(UIButton *)sender {
+    JCFileManager *fileManager = [JCFileManager sharedFileManager];
+    if ([fileManager writeFile:@"holdUrl.txt" andData:self.webview.request.URL.absoluteString]) {
+        [AlertHelper showOneSecond:@"写入成功！" andDelegate:self.view];
+    }
+}
+
 - (void)longPressToDo:(UILongPressGestureRecognizer *)gesture {
     if (gesture.state == UIGestureRecognizerStateEnded) {
         CGPoint pt = [gesture locationInView:self.webview];
@@ -303,6 +307,16 @@
         _activityIndicator.frame = CGRectMake(50, 0, 20, 20);
     }
     return _activityIndicator;
+}
+
+- (UIButton *)holdUrl {
+    if (!_holdUrl) {
+        _holdUrl = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        _holdUrl.frame = CGRectMake(self.webview.frame.size.width-45, self.webview.frame.size.height-45, 45, 45);
+        _holdUrl.backgroundColor = [UIColor colorWithWhite:0.500 alpha:0.150];
+        [_holdUrl addTarget:self action:@selector(holdUrl_action:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _holdUrl;
 }
 
 - (void)didReceiveMemoryWarning {

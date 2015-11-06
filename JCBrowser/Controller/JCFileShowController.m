@@ -52,21 +52,18 @@
     for (int i=0; i<array.count; i++) {
         NSString *path = array[i];
         NSArray *strArray = [path componentsSeparatedByString:@"/"];
-        if ([strArray[strArray.count-2] isEqualToString:@"image"]) {
-            NSString *fileName = strArray[strArray.count-1];
-            NSString *size = [NSString stringWithFormat:@"%llu",[self.fileManager fileSizeAtPath:path]];
-            NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:fileName,JCFilesTable_TITLE,size,JCFilesTable_SIZE,path,JCFilesTable_PATH, nil];
-            [self.filesArray addObject:dic];
-            
-            NSArray *postfixArr = [fileName componentsSeparatedByString:@"."];
-            if (postfixArr.count>1) {
-                NSString *postfix = postfixArr[1];
-                if ([postfix isEqualToString:@"png"] || [postfix isEqualToString:@"jpg"] || [postfix isEqualToString:@"gif"] || [postfix isEqualToString:@"bmp"]) {
-                    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:path,@"image",postfixArr[0],@"info", nil];
-                    [self.imageArray addObject:dic];
-                }
+        NSString *fileName = strArray[strArray.count-1];
+        NSString *size = [NSString stringWithFormat:@"%llu",[self.fileManager fileSizeAtPath:path]];
+        NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:fileName,JCFilesTable_TITLE,size,JCFilesTable_SIZE,path,JCFilesTable_PATH, nil];
+        [self.filesArray addObject:dic];
+        
+        NSArray *postfixArr = [fileName componentsSeparatedByString:@"."];
+        if (postfixArr.count>1) {
+            NSString *postfix = postfixArr[1];
+            if ([postfix isEqualToString:@"png"] || [postfix isEqualToString:@"jpg"] || [postfix isEqualToString:@"gif"] || [postfix isEqualToString:@"bmp"]) {
+                NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:path,@"image",postfixArr[0],@"info", nil];
+                [self.imageArray addObject:dic];
             }
-
         }
     }
 }
@@ -92,11 +89,17 @@
 }
 
 - (void)seeIndex:(NSInteger)index {
-    [self.imageSee showToImageWithPath:self.filesArray[index][JCFilesTable_PATH]];
-    self.item.title = @"返回";
-    self.imageSee.hidden = NO;
-    self.filesTable.hidden = YES;
-    
+    NSString *fileName = self.filesArray[index][JCFilesTable_TITLE];
+    NSArray *postfixArr = [fileName componentsSeparatedByString:@"."];
+    if (postfixArr.count>1) {
+        NSString *postfix = postfixArr[1];
+        if ([postfix isEqualToString:@"png"] || [postfix isEqualToString:@"jpg"] || [postfix isEqualToString:@"gif"] || [postfix isEqualToString:@"bmp"]) {
+            [self.imageSee showToImageWithPath:self.filesArray[index][JCFilesTable_PATH]];
+            self.item.title = @"返回";
+            self.imageSee.hidden = NO;
+            self.filesTable.hidden = YES;
+        }
+    }
 }
 
 #pragma mark - 点击事件

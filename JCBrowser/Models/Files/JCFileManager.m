@@ -123,7 +123,12 @@ static JCFileManager *fileManager = nil;
         [flieManager createFileAtPath:filePath contents:nil attributes:nil];
     }
     NSString *myString = [NSString stringWithContentsOfFile:filePath usedEncoding:NULL error:NULL];
-    NSString *str = [NSString stringWithFormat:@"%@,\n%@",myString,string];
+    NSString *str = @"";
+    if (![myString isEqualToString:@""]) {
+        str = [NSString stringWithFormat:@"%@,\n%@",myString,string];
+    }else {
+        str = string;
+    }
     BOOL isSuccess = [str writeToFile:filePath atomically:YES encoding:NSUTF8StringEncoding error:nil];
     return isSuccess;
 }

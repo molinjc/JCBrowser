@@ -80,15 +80,18 @@
  */
 -(void)creatImageView{
     
-    self.dic = self.arrImage[self.tally];//读取数组第一个字典
+    if (self.arrImage.count > 0) {
+        self.dic = self.arrImage[self.tally];//读取数组第一个字典
+        
+        self.imgV = [[UIImageView alloc]init];
+        
+        [self addSubview:self.imgV];
+        
+        self.imgV.userInteractionEnabled = YES;//设置用户交互
+        
+        [self setImageViewFrameWithPath:self.dic[@"image"]];
+    }
     
-    self.imgV = [[UIImageView alloc]init];
-    
-    [self addSubview:self.imgV];
-    
-    self.imgV.userInteractionEnabled = YES;//设置用户交互
-    
-    [self setImageViewFrameWithPath:self.dic[@"image"]];
     
 //    imgV.multipleTouchEnabled = YES;//设置多点触控开关
     

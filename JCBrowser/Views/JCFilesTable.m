@@ -74,7 +74,7 @@
 
 - (UITableView *)table {
     if (!_table) {
-        _table = [[UITableView alloc]initWithFrame:self.frame style:UITableViewStylePlain];
+        _table = [[UITableView alloc]initWithFrame:self.bounds style:UITableViewStylePlain];
         _table.delegate = self;
         _table.dataSource = self;
     }
