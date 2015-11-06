@@ -15,5 +15,5 @@
 @property(nonatomic,strong)UILabel *lblTally;//张数描述
 @property(nonatomic,strong)UILabel *lblInfo;//图片描述
 -(instancetype)initWithFrame:(CGRect)frame andImageArray:(NSArray *)arrImage;//初始化方法
-
+- (void)showToImageWithPath:(NSString *)path;
 @end

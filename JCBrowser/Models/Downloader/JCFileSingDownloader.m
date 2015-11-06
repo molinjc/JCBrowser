@@ -70,14 +70,12 @@
  *  1. 当接受到服务器的响应(连通了服务器)就会调用
  */
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
-    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-    if(httpResponse && [httpResponse respondsToSelector:@selector(allHeaderFields)]){
-        NSDictionary *httpResponseHeaderFields = [httpResponse allHeaderFields];
-        
-        long long totalLength = [[httpResponseHeaderFields objectForKey:@"Content-Length"] longLongValue];
-        
-        NSLog(@"文件大小：是 %lld", totalLength);
-    }
+//   NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+//    if(httpResponse && [httpResponse respondsToSelector:@selector(allHeaderFields)]){
+//        NSDictionary *httpResponseHeaderFields = [httpResponse allHeaderFields];
+//        
+//        long long totalLength = [[httpResponseHeaderFields objectForKey:@"Content-Length"] longLongValue];
+//    }
 }
 
 /**
@@ -119,7 +117,6 @@
  *  请求错误(失败)的时候调用(请求超时\断网\没有网, 一般指客户端错误)
  */
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-    NSLog(@"请求错误(失败):%@",error);
 }
 
 

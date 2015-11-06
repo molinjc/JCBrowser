@@ -15,12 +15,13 @@
 
 @interface JCFileShowController ()<UIAlertViewDelegate,JCFilesTableDelegate>
 
-@property (nonatomic, strong) JCImageSeeView *imageSee;
-@property (nonatomic, strong) JCFilesTable   *filesTable;
-@property (nonatomic, strong) JCFileManager  *fileManager;
-@property (nonatomic, strong) NSMutableArray *filesArray;
-@property (nonatomic, strong) NSMutableArray *imageArray;
-@property (nonatomic, assign) NSInteger       fileIndex;
+@property (nonatomic, strong) JCImageSeeView  *imageSee;
+@property (nonatomic, strong) JCFilesTable    *filesTable;
+@property (nonatomic, strong) JCFileManager   *fileManager;
+@property (nonatomic, strong) NSMutableArray  *filesArray;
+@property (nonatomic, strong) NSMutableArray  *imageArray;
+@property (nonatomic, assign) NSInteger        fileIndex;
+@property (nonatomic, strong) UIBarButtonItem *item;
 
 @end
 
@@ -77,11 +78,19 @@
     if (buttonIndex == 1) {
         BOOL isd = [self.fileManager deleteFile:self.filesArray[self.fileIndex][JCFilesTable_PATH]];
         if (isd) {
-           NSLog(@"isd = %d",isd);
+            [self obtainFilesArray];
+            [self.filesTable reloadFiles:self.filesArray];
         }
-        [self obtainFilesArray];
-        [self.filesTable reloadFiles:self.filesArray];
+        
     }
+}
+
+- (void)seeIndex:(NSInteger)index {
+    [self.imageSee showToImageWithPath:self.filesArray[index][JCFilesTable_PATH]];
+    self.item.title = @"返回";
+    self.imageSee.hidden = NO;
+    self.filesTable.hidden = YES;
+    
 }
 
 #pragma mark - 点击事件
@@ -107,7 +116,7 @@
 
 - (JCImageSeeView *)imageSee {
     if (!_imageSee) {
-        _imageSee = [[JCImageSeeView alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, 300) andImageArray:self.imageArray];
+        _imageSee = [[JCImageSeeView alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-64) andImageArray:self.imageArray];
         _imageSee.hidden = YES;
     }
     return _imageSee;

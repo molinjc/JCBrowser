@@ -48,7 +48,7 @@ static JCFileManager *fileManager = nil;
         NSString *path = arr_home[i];
         [fileManager fileExistsAtPath:path isDirectory:(&isFile)];
         if (!isFile) {
-            [fileArray addObject:path];
+            [fileArray addObject:[NSString stringWithFormat:@"%@/%@",caches,path]];
         }
     }
     return fileArray;
@@ -123,9 +123,7 @@ static JCFileManager *fileManager = nil;
         [flieManager createFileAtPath:filePath contents:nil attributes:nil];
     }
     NSString *myString = [NSString stringWithContentsOfFile:filePath usedEncoding:NULL error:NULL];
-    NSLog(@"myString:%@",myString);
     NSString *str = [NSString stringWithFormat:@"%@,\n%@",myString,string];
-    NSLog(@"str %@",str);
     BOOL isSuccess = [str writeToFile:filePath atomically:YES encoding:NSUTF8StringEncoding error:nil];
     return isSuccess;
 }

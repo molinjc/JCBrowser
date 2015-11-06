@@ -30,15 +30,12 @@
 //    if (self.totalLength == -1) {
 //        self.totalLength = 0;
 //    }
-//    NSLog(@"文件大小：%lld",self.totalLength);
 //    
     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
     if(httpResponse && [httpResponse respondsToSelector:@selector(allHeaderFields)]){
         NSDictionary *httpResponseHeaderFields = [httpResponse allHeaderFields];
         
         self.totalLength = [[httpResponseHeaderFields objectForKey:@"Content-Length"] longLongValue];
-        
-        NSLog(@"文件大小: %lld", self.totalLength);
     }
 
     

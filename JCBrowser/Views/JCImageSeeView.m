@@ -31,6 +31,21 @@
     }
     return self;
 }
+
+- (void)showToImageWithPath:(NSString *)path {
+    for (int i=0; i<self.arrImage.count; i++) {
+        NSString *imagePath = self.arrImage[i][@"image"];
+        if ([imagePath isEqualToString:path]) {
+            self.tally = i;
+            self.dic = self.arrImage[self.tally];//获取字典
+            self.imgV.image = [self imageWithPath:self.dic[@"image"]];//重新给图片视图指定图片
+            self.lblTally.text = [NSString stringWithFormat:@"%ld/%lu",self.tally+1,(unsigned long)self.arrImage.count];
+            self.lblInfo.text = self.dic[@"info"];
+            break;
+        }
+    }
+}
+
 /**
  *  创建图片视图
  */
@@ -40,7 +55,7 @@
     
     self.imgV = [[UIImageView alloc]initWithFrame:CGRectMake(0, 84, self.frame.size.width, self.frame.size.height-120)];
     
-    self.imgV.image = [UIImage imageNamed:self.dic[@"image"]];//从字典读取图片
+    self.imgV.image = [self imageWithPath:self.dic[@"image"]];//从字典读取图片
     
     
     [self addSubview:self.imgV];
@@ -55,7 +70,7 @@
  */
 -(void)creatLabel{
     
-    self.lblTally = [[UILabel alloc]initWithFrame:CGRectMake(self.frame.size.width/2-25, 54, 50, 20)];
+    self.lblTally = [[UILabel alloc]initWithFrame:CGRectMake(self.frame.size.width/2-25, 8, 50, 20)];
     
     self.lblTally.text = [NSString stringWithFormat:@"%ld/%lu",self.tally+1,(unsigned long)self.arrImage.count,nil];
     
@@ -63,13 +78,24 @@
     
     [self addSubview:self.lblTally];
     
-    self.lblInfo = [[UILabel alloc]initWithFrame:CGRectMake(self.frame.size.width/2-50,self.frame.size.height-30 , 100, 20)];
+    self.lblInfo = [[UILabel alloc]initWithFrame:CGRectMake(0,self.frame.size.height-30 , self.frame.size.width, 20)];
+    self.lblInfo.textAlignment = NSTextAlignmentCenter;
     
     self.lblInfo.text = self.dic[@"info"];
     
     self.lblInfo.textColor = [UIColor whiteColor];
     
     [self addSubview:self.lblInfo];
+}
+
+- (UIImage *)imageWithPath:(NSString *)path {
+    NSFileManager *fileManage = [NSFileManager defaultManager];
+    
+    NSData *data = [fileManage contentsAtPath:self.dic[@"image"]];
+    
+    UIImage *image = [UIImage imageWithData:data];//从字典读取图片
+    
+    return image;
 }
 
 /**
@@ -90,7 +116,7 @@
             self.tally += 1;
         }
         self.dic = self.arrImage[self.tally];//获取字典
-        self.imgV.image = [UIImage imageNamed:self.dic[@"image"]];//重新给图片视图指定图片
+        self.imgV.image = [self imageWithPath:self.dic[@"image"]];//重新给图片视图指定图片
         self.lblTally.text = [NSString stringWithFormat:@"%ld/%lu",self.tally+1,(unsigned long)self.arrImage.count];
         self.lblInfo.text = self.dic[@"info"];
     }else if(cu.x < self.frame.size.width/2){
@@ -100,7 +126,7 @@
            self.tally -= 1;
         }
         self.dic = self.arrImage[self.tally];
-        self.imgV.image = [UIImage imageNamed:self.dic[@"image"]];
+        self.imgV.image = [self imageWithPath:self.dic[@"image"]];
         self.lblTally.text = [NSString stringWithFormat:@"%ld/%lu",self.tally+1,(unsigned long)self.arrImage.count];
         self.lblInfo.text = self.dic[@"info"];
     }

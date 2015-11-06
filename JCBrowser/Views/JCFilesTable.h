@@ -15,6 +15,7 @@
 @protocol JCFilesTableDelegate <NSObject>
 
 - (void)selecedIndex:(NSInteger)index;
+- (void)seeIndex:(NSInteger)index;
 
 @end
 

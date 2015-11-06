@@ -42,6 +42,8 @@
     [self.webview addSubview:self.hideButton];
     self.isTo = NO;
     self.name = @"";
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.baidu.com"]];
+    [self.webview loadRequest:request];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -63,14 +65,12 @@
 
 //当在请求加载中发生错误时，得到通知。会提供一个NSSError对象，以标识所发生错误类型。
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-    NSLog(@"web请求加载中发生错误:%@",error);
     //    UIAlertView *alterview = [[UIAlertView alloc] initWithTitle:@"" message:[error localizedDescription]  delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
     //    [alterview show];
 }
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     NSString *strUrl = [[request URL] absoluteString];
-    NSLog(@"地址：%@",strUrl);
     NSArray *urlArray = [strUrl componentsSeparatedByString:@"/"];
     NSString *str = urlArray[urlArray.count-1];
     self.name = [[str componentsSeparatedByString:@"."] objectAtIndex:0];
@@ -236,17 +236,17 @@
     //[self.webview reload]; //重载 --- 刷新
 }
 
-- (void)longPressToDo:(UITapGestureRecognizer *)gesture {
-    NSLog(@"长按");
-    CGPoint pt = [gesture locationInView:self.webview];
-    NSString *imgURL = [NSString stringWithFormat:@"document.elementFromPoint(%f, %f).src", pt.x, pt.y];
-    NSString *urlToSave = [self.webview stringByEvaluatingJavaScriptFromString:imgURL];
-    NSLog(@"image url=%@", urlToSave);
-    if (urlToSave.length > 0) {
-        [AlertHelper showOneSecond:@"获取到图片地址" andDelegate:self.view];
-        [self downloaderFileWithUrl:urlToSave];
-    }else {
-        [AlertHelper showOneSecond:@"没有获取到图片地址" andDelegate:self.view];
+- (void)longPressToDo:(UILongPressGestureRecognizer *)gesture {
+    if (gesture.state == UIGestureRecognizerStateEnded) {
+        CGPoint pt = [gesture locationInView:self.webview];
+        NSString *imgURL = [NSString stringWithFormat:@"document.elementFromPoint(%f, %f).src", pt.x, pt.y];
+        NSString *urlToSave = [self.webview stringByEvaluatingJavaScriptFromString:imgURL];
+        if (urlToSave.length > 0) {
+            [AlertHelper showOneSecond:@"获取到图片地址" andDelegate:self.view];
+            [self downloaderFileWithUrl:urlToSave];
+        }else {
+            [AlertHelper showOneSecond:@"没有获取到图片地址" andDelegate:self.view];
+        }
     }
 }
 
@@ -274,11 +274,10 @@
         _webview.delegate = self;
         _webview.scalesPageToFit = YES;//自动对页面进行缩放以适应屏幕
         // _webview.detectsPhoneNumbers = YES;//自动检测网页上的电话号码，单击可以拨打
-        UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(longPressToDo:)];
-        singleTap.numberOfTapsRequired = 2;
-        [_webview addGestureRecognizer:singleTap];
-        singleTap.delegate = self;
-        singleTap.cancelsTouchesInView = NO;
+        UILongPressGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressToDo:)];
+        [_webview addGestureRecognizer:longPressGestureRecognizer];
+        longPressGestureRecognizer.delegate = self;
+        //longPressGestureRecognizer.cancelsTouchesInView = NO;
 
     }
     return _webview;

@@ -14,6 +14,8 @@
 
 @property (nonatomic, strong) NSMutableArray *files;
 
+@property (nonatomic, assign) NSInteger index;
+
 @end
 
 @implementation JCFilesTable
@@ -29,15 +31,22 @@
 
 - (void)reloadFiles:(NSMutableArray *)files {
     self.files = files;
+    [self.table removeFromSuperview];
+    self.table = nil;
+    [self addSubview:self.table];
     [self.table reloadData];
 }
 
-- (void)doubleClick:(UITapGestureRecognizer *)sender {
-    [self.delegate selecedIndex:sender.view.tag];
+- (void)doubleClick:(UILongPressGestureRecognizer *)sender {
+    if (sender.state == UIGestureRecognizerStateEnded) {
+        self.index = sender.view.tag;
+        [self.delegate selecedIndex:sender.view.tag];
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    [self.delegate seeIndex:indexPath.row];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -50,10 +59,10 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:[NSString stringWithFormat:@"cell%ld",(long)indexPath.row] ];
         cell.textLabel.text = self.files[indexPath.row][JCFilesTable_TITLE];
         cell.detailTextLabel.text = [NSString stringWithFormat:@"文件大小：%@",self.files[indexPath.row][JCFilesTable_SIZE]];
-        UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleClick:)];
-        doubleTap.view.tag = indexPath.row;
-        [doubleTap setNumberOfTapsRequired:2];
-        [cell addGestureRecognizer:doubleTap];
+        UILongPressGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(doubleClick:)];
+        cell.tag = indexPath.row;
+//        [doubleTap setNumberOfTapsRequired:2];
+        [cell addGestureRecognizer:longPressGestureRecognizer];
     }
     return cell;
 }
