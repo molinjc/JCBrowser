@@ -149,7 +149,7 @@
     // 文件保存到什么地方
     NSString *caches = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
     NSArray *arr = [url componentsSeparatedByString:@"/"];
-    NSString *filepath = [caches stringByAppendingPathComponent:arr[arr.count-1]];
+    NSString *filepath = [caches stringByAppendingPathComponent:[NSString stringWithFormat:@"image/%@",arr[arr.count-1]]];
     fmd.destPath = filepath;
     [fmd start];
 }

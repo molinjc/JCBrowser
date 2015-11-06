@@ -10,6 +10,7 @@
 
 #import "JCImageSeeView.h"
 #import "JCFilesTable.h"
+#import "AlertHelper.h"
 
 #import "JCFileManager.h"
 
@@ -50,18 +51,21 @@
     for (int i=0; i<array.count; i++) {
         NSString *path = array[i];
         NSArray *strArray = [path componentsSeparatedByString:@"/"];
-        NSString *fileName = strArray[strArray.count-1];
-        NSString *size = [NSString stringWithFormat:@"%llu",[self.fileManager fileSizeAtPath:path]];
-        NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:fileName,JCFilesTable_TITLE,size,JCFilesTable_SIZE,path,JCFilesTable_PATH, nil];
-        [self.filesArray addObject:dic];
-        
-        NSArray *postfixArr = [fileName componentsSeparatedByString:@"."];
-        if (postfixArr.count>1) {
-            NSString *postfix = postfixArr[1];
-            if ([postfix isEqualToString:@"png"] || [postfix isEqualToString:@"jpg"] || [postfix isEqualToString:@"gif"] || [postfix isEqualToString:@"bmp"]) {
-                NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:path,@"image",postfixArr[0],@"info", nil];
-                [self.imageArray addObject:dic];
+        if ([strArray[strArray.count-2] isEqualToString:@"image"]) {
+            NSString *fileName = strArray[strArray.count-1];
+            NSString *size = [NSString stringWithFormat:@"%llu",[self.fileManager fileSizeAtPath:path]];
+            NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:fileName,JCFilesTable_TITLE,size,JCFilesTable_SIZE,path,JCFilesTable_PATH, nil];
+            [self.filesArray addObject:dic];
+            
+            NSArray *postfixArr = [fileName componentsSeparatedByString:@"."];
+            if (postfixArr.count>1) {
+                NSString *postfix = postfixArr[1];
+                if ([postfix isEqualToString:@"png"] || [postfix isEqualToString:@"jpg"] || [postfix isEqualToString:@"gif"] || [postfix isEqualToString:@"bmp"]) {
+                    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:path,@"image",postfixArr[0],@"info", nil];
+                    [self.imageArray addObject:dic];
+                }
             }
+
         }
     }
 }
@@ -80,6 +84,7 @@
         if (isd) {
             [self obtainFilesArray];
             [self.filesTable reloadFiles:self.filesArray];
+            [AlertHelper showOneSecond:@"删除成功！" andDelegate:self.view];
         }
         
     }
@@ -110,8 +115,8 @@
 #pragma mark - 视图创建
 
 - (void)createNavigationWithBarButtonItem {
-    UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithTitle:@"相册" style:UIBarButtonItemStyleDone target:self action:@selector(item_sction:)];
-    self.navigationItem.rightBarButtonItem = item;
+    self.item = [[UIBarButtonItem alloc]initWithTitle:@"相册" style:UIBarButtonItemStyleDone target:self action:@selector(item_sction:)];
+    self.navigationItem.rightBarButtonItem = self.item;
 }
 
 - (JCImageSeeView *)imageSee {
