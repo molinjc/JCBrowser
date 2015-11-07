@@ -15,6 +15,7 @@
 #import "JCFileMultiDownloader.h"
 #import "JCFileManager.h"
 
+#import "JCDownloader.h"
 
 @interface ViewController ()<JCBarViewDelegate,UIWebViewDelegate,NSURLConnectionDelegate,UIGestureRecognizerDelegate>
 
@@ -130,13 +131,10 @@
 - (void)downloaderWebAllImage:(UIWebView *)webView {
     NSString *allImageAddressWithString = [webView stringByEvaluatingJavaScriptFromString:[self createImgArrayJavaScript]];
     NSArray *allImageAddressWithArray = [allImageAddressWithString componentsSeparatedByString:@";"];
-    // 多线程 --- 异步
-   // dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    //dispatch_async(queue, ^{
-        for (int i=0; i<allImageAddressWithArray.count; i++) {
-            [self downloaderFileWithUrl:allImageAddressWithArray[i]];
-        }
-   // });
+    
+    for (int i=0; i<allImageAddressWithArray.count; i++) {
+        [self downloaderFileWithUrl:allImageAddressWithArray[i]];
+    }
 }
 
 /**
@@ -165,7 +163,6 @@
     fmd.destPath = filepath;
     [fmd start];
 }
-
 
 #pragma mark - JCBarView代理
 
@@ -318,6 +315,7 @@
     }
     return _holdUrl;
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

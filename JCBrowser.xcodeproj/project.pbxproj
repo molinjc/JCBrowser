@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3571FC8E1BED6EA4009863DC /* JCDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 3571FC8D1BED6EA4009863DC /* JCDownloader.m */; settings = {ASSET_TAGS = (); }; };
 		35ECBD2C1BEB2CC100C2A5FC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 35ECBD2B1BEB2CC100C2A5FC /* main.m */; };
 		35ECBD2F1BEB2CC100C2A5FC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 35ECBD2E1BEB2CC100C2A5FC /* AppDelegate.m */; };
 		35ECBD321BEB2CC100C2A5FC /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35ECBD311BEB2CC100C2A5FC /* ViewController.m */; };
@@ -44,6 +45,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3571FC8C1BED6EA4009863DC /* JCDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCDownloader.h; sourceTree = "<group>"; };
+		3571FC8D1BED6EA4009863DC /* JCDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDownloader.m; sourceTree = "<group>"; };
 		35ECBD271BEB2CC100C2A5FC /* JCBrowser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JCBrowser.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		35ECBD2B1BEB2CC100C2A5FC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		35ECBD2D1BEB2CC100C2A5FC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ../AppDelegate.h; sourceTree = "<group>"; };
@@ -220,6 +223,8 @@
 				35ECBD721BEB3B8C00C2A5FC /* JCFileMultiDownloader.m */,
 				35ECBD731BEB3B8C00C2A5FC /* JCFileSingDownloader.h */,
 				35ECBD741BEB3B8C00C2A5FC /* JCFileSingDownloader.m */,
+				3571FC8C1BED6EA4009863DC /* JCDownloader.h */,
+				3571FC8D1BED6EA4009863DC /* JCDownloader.m */,
 			);
 			path = Downloader;
 			sourceTree = "<group>";
@@ -367,6 +372,7 @@
 				35ECBD7E1BEB419900C2A5FC /* JCFileManager.m in Sources */,
 				35ECBD6A1BEB2CE900C2A5FC /* JCBarView.m in Sources */,
 				35ECBD771BEB3B8C00C2A5FC /* JCFileSingDownloader.m in Sources */,
+				3571FC8E1BED6EA4009863DC /* JCDownloader.m in Sources */,
 				35ECBD841BEB43B500C2A5FC /* JCImageSeeView.m in Sources */,
 				35ECBD871BEB4B9600C2A5FC /* JCFilesTable.m in Sources */,
 				35ECBD761BEB3B8C00C2A5FC /* JCFileMultiDownloader.m in Sources */,

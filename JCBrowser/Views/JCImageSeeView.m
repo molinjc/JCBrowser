@@ -101,7 +101,8 @@
  */
 -(void)creatLabel{
     
-    self.lblTally = [[UILabel alloc]initWithFrame:CGRectMake(self.frame.size.width/2-25, 8, 50, 20)];
+    self.lblTally = [[UILabel alloc]initWithFrame:CGRectMake(0, 8, self.frame.size.width, 20)];
+    self.lblTally.textAlignment = NSTextAlignmentCenter;
     
     self.lblTally.text = [NSString stringWithFormat:@"%ld/%lu",self.tally+1,(unsigned long)self.arrImage.count,nil];
     
@@ -177,11 +178,17 @@
     UIImage *image = [self imageWithPath:path];//重新给图片视图指定图片
     CGFloat width = self.frame.size.width;
     CGFloat height = self.frame.size.height;
+    CGFloat multiple = 0;
     if (image.size.width < width) {
         width = image.size.width;
+    }else {
+        multiple = image.size.width / width + 0.5;
+        width = image.size.width / multiple;
     }
     if (image.size.height < height) {
         height = image.size.height;
+    }else {
+        height = image.size.height / multiple;
     }
     
     self.imgV.frame = CGRectMake(0, 0, width, height);
