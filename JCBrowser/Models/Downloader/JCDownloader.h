@@ -8,17 +8,17 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol JCDownloaderDelegate <NSObject>
-
-- (void)startDownloader;
-- (void)endDownloader;
-- (void)endDownloaderWithError:(NSError *)error;
-
-@end
+//@protocol JCDownloaderDelegate <NSObject>
+//
+//- (void)startDownloader;
+//- (void)endDownloader;
+//- (void)endDownloaderWithError:(NSError *)error;
+//
+//@end
 
 @interface JCDownloader : NSObject
 
-@property (nonatomic, weak) id<JCDownloaderDelegate> delegate;
+//@property (nonatomic, weak) id<JCDownloaderDelegate> delegate;
 
 - (void)startDownloaderURL:(NSString *)url depositPath:(NSString *)path;
 

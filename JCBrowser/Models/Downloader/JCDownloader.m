@@ -35,9 +35,16 @@
 //    return self;
 //}
 
+- (NSFileHandle *)writeHandle {
+    if (!_writeHandle) {
+        _writeHandle = [NSFileHandle fileHandleForWritingAtPath:self.path];
+    }
+    return _writeHandle;
+}
+
 - (void)startDownloaderURL:(NSString *)url depositPath:(NSString *)path {
-    self.mdata = [NSMutableData new];
     self.path = path;
+    self.mdata = [NSMutableData new];
     NSURL *URL = [NSURL URLWithString:url];
     // 默认就是GET请求
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL];
@@ -53,7 +60,7 @@
  *  1. 当接受到服务器的响应(连通了服务器)就会调用
  */
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
-    [self.delegate startDownloader];
+   // [self.delegate startDownloader];
 }
 
 /**
@@ -67,17 +74,18 @@
  *  3. 当服务器的数据接受完毕后就会调用
  */
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-    self.writeHandle = [NSFileHandle fileHandleForWritingAtPath:self.path];
-    [self.writeHandle writeData:self.mdata];
+    //self.writeHandle = [NSFileHandle fileHandleForWritingAtPath:self.path];
+    [self.mdata writeToFile:self.path atomically:YES];
+    //[self.writeHandle writeData:self.mdata];
     [self.writeHandle closeFile];
-    [self.delegate endDownloader];
+    //[self.delegate endDownloader];
 }
 
 /**
  *  请求错误(失败)的时候调用(请求超时\断网\没有网, 一般指客户端错误)
  */
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-    [self.delegate endDownloaderWithError:error];
+    //[self.delegate endDownloaderWithError:error];
 }
 
 

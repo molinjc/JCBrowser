@@ -26,17 +26,17 @@
     NSURLResponse *response = nil;
     // 这里要用异步请求
     [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
-//    self.totalLength = response.expectedContentLength;
+    self.totalLength = response.expectedContentLength;
 //    if (self.totalLength == -1) {
 //        self.totalLength = 0;
 //    }
 //    
-    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-    if(httpResponse && [httpResponse respondsToSelector:@selector(allHeaderFields)]){
-        NSDictionary *httpResponseHeaderFields = [httpResponse allHeaderFields];
-        
-        self.totalLength = [[httpResponseHeaderFields objectForKey:@"Content-Length"] longLongValue];
-    }
+//    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+//    if(httpResponse && [httpResponse respondsToSelector:@selector(allHeaderFields)]){
+//        NSDictionary *httpResponseHeaderFields = [httpResponse allHeaderFields];
+//        
+//        self.totalLength = [[httpResponseHeaderFields objectForKey:@"Content-Length"] longLongValue];
+//    }
 
     
 }

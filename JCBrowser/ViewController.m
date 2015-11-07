@@ -128,7 +128,7 @@
  *
  *  @param webView 网页
  */
-- (void)downloaderWebAllImage:(UIWebView *)webView {
+- (void)downloaderWebAllImage:(UIWebView *)webView { // [self performSelectorInBackground:@selector(test) withObject:nil];
     NSString *allImageAddressWithString = [webView stringByEvaluatingJavaScriptFromString:[self createImgArrayJavaScript]];
     NSArray *allImageAddressWithArray = [allImageAddressWithString componentsSeparatedByString:@";"];
     
@@ -143,14 +143,16 @@
  *  @param url 地址
  */
 - (void)downloaderFileWithUrl:(NSString *)url {
-    JCFileMultiDownloader *fmd = [[JCFileMultiDownloader alloc]init];
-    fmd.url = url;
+//    JCFileMultiDownloader *fmd = [[JCFileMultiDownloader alloc]init];
+//    fmd.url = url;
     // 文件保存到什么地方
     NSString *caches = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
     NSArray *arr = [url componentsSeparatedByString:@"/"];
     NSString *filepath = [caches stringByAppendingPathComponent:arr[arr.count-1]];
-    fmd.destPath = filepath;
-    [fmd start];
+    JCDownloader *down = [JCDownloader new];
+    [down startDownloaderURL:url depositPath:filepath];
+//    fmd.destPath = filepath;
+//    [fmd start];
 }
 
 - (void)downloaderFileWithUrl:(NSString *)url name:(NSString *)name {
@@ -231,6 +233,7 @@
 - (void)hideButton_action:(UIButton *)sender {
     [AlertHelper showOneSecond:@"开始保存图片" andDelegate:self.view];
     [self downloaderWebAllImage:self.webview];
+    //[self performSelectorInBackground:@selector(downloaderWebAllImage) withObject:nil];
     //[self.webview reload]; //重载 --- 刷新
 }
 

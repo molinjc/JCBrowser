@@ -15,7 +15,7 @@
  *
  *  @return 返回视图对象
  */
--(instancetype)initWithFrame:(CGRect)frame andImageArray:(NSArray *)arrImage{
+-(instancetype)initWithFrame:(CGRect)frame andImageArray:(NSMutableArray *)arrImage{
     
     if (self = [super initWithFrame:frame]) {
         
@@ -28,6 +28,8 @@
         [self creatImageView];
         
         [self creatLabel];
+        
+        [self createClickView];
     }
     return self;
 }
@@ -49,6 +51,17 @@
             break;
         }
     }
+}
+
+/**
+ *  根据图片数组刷新图片视图
+ */
+- (void)reloadImageViewWithImageArray:(NSMutableArray *)array {
+    self.arrImage = array;
+    if (self.tally >= self.arrImage.count) {
+        self.tally = self.arrImage.count-1;
+    }
+    [self reloadImageView];
 }
 
 /**
@@ -87,15 +100,34 @@
         
         [self addSubview:self.imgV];
         
+        UILongPressGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(longPressClick:)];
+        [self.imgV addGestureRecognizer:longPressGestureRecognizer];
+        
         self.imgV.userInteractionEnabled = YES;//设置用户交互
         
         [self setImageViewFrameWithPath:self.dic[@"image"]];
     }
-    
-    
 //    imgV.multipleTouchEnabled = YES;//设置多点触控开关
     
 }
+
+- (void)createClickView {
+    self.leftview = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 50, self.bounds.size.height)];
+    self.leftview.backgroundColor = [UIColor clearColor];
+    self.leftview.userInteractionEnabled = NO;
+    [self addSubview:self.leftview];
+    self.rightview = [[UIView alloc]initWithFrame:CGRectMake(self.bounds.size.width-50, 0, 50, self.bounds.size.height)];
+    self.rightview.backgroundColor = [UIColor clearColor];
+    self.rightview.userInteractionEnabled = NO;
+    [self addSubview:self.rightview];
+}
+
+- (void)longPressClick:(UILongPressGestureRecognizer *)sender {
+    if (sender.state == UIGestureRecognizerStateEnded) {
+        [self.delegate selecedImageWithPath:self.dic[@"image"]];
+    }
+}
+
 /**
  *  创建张数描述标签和图片描述标签
  */
@@ -143,9 +175,9 @@
  */
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
 
-    CGPoint cu = [[touches anyObject]locationInView:self.imgV];//获取触摸点在图片视图的坐标
+    CGPoint cu = [[touches anyObject]locationInView:self];//获取触摸点在图片视图的坐标
     //判断触摸点在哪边
-    if (cu.x > self.frame.size.width/2) {
+    if (CGRectContainsPoint(self.rightview.frame, cu))  {
         //判断下标值
         if (self.tally == self.arrImage.count-1) {
             self.tally = 0;
@@ -156,7 +188,7 @@
         [self setImageViewFrameWithPath:self.dic[@"image"]];
         self.lblTally.text = [NSString stringWithFormat:@"%ld/%lu",self.tally+1,(unsigned long)self.arrImage.count];
         self.lblInfo.text = self.dic[@"info"];
-    }else if(cu.x < self.frame.size.width/2){
+    }else if (CGRectContainsPoint(self.leftview.frame, cu)) {
         if (self.tally == 0) {
             self.tally =self.arrImage.count-1;
         }else{
@@ -192,7 +224,7 @@
     }
     
     self.imgV.frame = CGRectMake(0, 0, width, height);
-    self.imgV.center = self.center;
+    self.imgV.center = CGPointMake(self.center.x, self.center.y-30);
     self.imgV.image = image;
 }
 

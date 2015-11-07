@@ -50,6 +50,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     // 设置请求头信息
     NSString *value = [NSString stringWithFormat:@"bytes=%lld-%lld",self.begin + self.currentLength,self.end];
+    NSLog(@"value = %@",value);
     [request setValue:value forHTTPHeaderField:@"Range"];
     self.conn = [NSURLConnection connectionWithRequest:request delegate:self];
     _downloading = YES;
@@ -83,10 +84,10 @@
  */
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     // 移动到文件的尾部
- //   [self.writeHandle seekToFileOffset:self.begin + self.currentLength];
+    [self.writeHandle seekToFileOffset:self.begin + self.currentLength];
     // 从当前移动的位置(文件尾部)开始写入数据
-//    [self.writeHandle writeData:data];
-    [self.dataArray addObject:data];
+    [self.writeHandle writeData:data];
+ //   [self.dataArray addObject:data];
     // 累加长度
     self.currentLength += data.length;
     // 打印下载进度
@@ -101,16 +102,17 @@
  */
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     
-    for (int i=0; i<self.dataArray.count; i++) {
-        NSData *data = self.dataArray[i];
-        [self.writeHandle writeData:data];
-    }
+//    for (int i=0; i<self.dataArray.count; i++) {
+//        NSData *data = self.dataArray[i];
+//        [self.writeHandle writeData:data];
+//    }
     
     // 清空属性值
     self.currentLength = 0;
     // 关闭连接(不再输入数据到文件中)
     [self.writeHandle closeFile];
     self.writeHandle = nil;
+    NSLog(@"下载结束");
 }
 
 /**

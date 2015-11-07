@@ -14,7 +14,7 @@
 
 #import "JCFileManager.h"
 
-@interface JCFileShowController ()<UIAlertViewDelegate,JCFilesTableDelegate>
+@interface JCFileShowController ()<UIAlertViewDelegate,JCFilesTableDelegate,JCImageSeeViewDelegate>
 
 @property (nonatomic, strong) JCImageSeeView  *imageSee;
 @property (nonatomic, strong) JCFilesTable    *filesTable;
@@ -22,6 +22,7 @@
 @property (nonatomic, strong) NSMutableArray  *filesArray;
 @property (nonatomic, strong) NSMutableArray  *imageArray;
 @property (nonatomic, assign) NSInteger        fileIndex;
+@property (nonatomic, copy)   NSString        *filePath;
 @property (nonatomic, strong) UIBarButtonItem *item;
 @property (nonatomic, strong) UIButton        *delete;
 
@@ -33,6 +34,7 @@
     [super viewDidLoad];
     
     self.fileIndex = 0;
+    self.filePath = @"";
     self.filesArray = [NSMutableArray new];
     self.imageArray = [NSMutableArray new];
     [self obtainFilesArray];
@@ -73,19 +75,8 @@
 - (void)selecedIndex:(NSInteger)index {
     self.fileIndex = index;
     UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"确定删除？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    alertView.tag = 102;
     [alertView show];
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 1) {
-        BOOL isd = [self.fileManager deleteFile:self.filesArray[self.fileIndex][JCFilesTable_PATH]];
-        if (isd) {
-            [self obtainFilesArray];
-            [self.filesTable reloadFiles:self.filesArray];
-            [AlertHelper showOneSecond:@"删除成功！" andDelegate:self.view];
-        }
-        
-    }
 }
 
 - (void)seeIndex:(NSInteger)index {
@@ -98,6 +89,39 @@
             self.item.title = @"返回";
             self.imageSee.hidden = NO;
             self.filesTable.hidden = YES;
+        }
+    }
+}
+
+#pragma mark - JCImageSeeViewDelegate
+
+- (void)selecedImageWithPath:(NSString *)path {
+    self.filePath = path;
+    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"确定删除？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    alertView.tag = 101;
+    [alertView show];
+}
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (alertView.tag == 102) {
+        if (buttonIndex == 1) {
+            BOOL isd = [self.fileManager deleteFile:self.filesArray[self.fileIndex][JCFilesTable_PATH]];
+            if (isd) {
+                [self obtainFilesArray];
+                [self.filesTable reloadFiles:self.filesArray];
+                [AlertHelper showOneSecond:@"删除成功！" andDelegate:self.view];
+            }
+        }
+    }else {
+        if (buttonIndex == 1) {
+            BOOL isd = [self.fileManager deleteFile:self.filePath];
+            if (isd) {
+                [self obtainFilesArray];
+                [self.imageSee reloadImageViewWithImageArray:self.imageArray];
+                [AlertHelper showOneSecond:@"删除成功！" andDelegate:self.view];
+            }
         }
     }
 }
@@ -138,6 +162,7 @@
     if (!_imageSee) {
         _imageSee = [[JCImageSeeView alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-64) andImageArray:self.imageArray];
         _imageSee.hidden = YES;
+        _imageSee.delegate = self;
     }
     return _imageSee;
 }
