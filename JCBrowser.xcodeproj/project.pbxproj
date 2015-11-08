@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		356B8B0A1BEE690F0006123E /* JCFilesTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 356B8B091BEE690F0006123E /* JCFilesTableCell.m */; settings = {ASSET_TAGS = (); }; };
 		3571FC8E1BED6EA4009863DC /* JCDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 3571FC8D1BED6EA4009863DC /* JCDownloader.m */; settings = {ASSET_TAGS = (); }; };
 		35ECBD2C1BEB2CC100C2A5FC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 35ECBD2B1BEB2CC100C2A5FC /* main.m */; };
 		35ECBD2F1BEB2CC100C2A5FC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 35ECBD2E1BEB2CC100C2A5FC /* AppDelegate.m */; };
@@ -45,6 +46,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		356B8B081BEE690F0006123E /* JCFilesTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCFilesTableCell.h; sourceTree = "<group>"; };
+		356B8B091BEE690F0006123E /* JCFilesTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCFilesTableCell.m; sourceTree = "<group>"; };
 		3571FC8C1BED6EA4009863DC /* JCDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCDownloader.h; sourceTree = "<group>"; };
 		3571FC8D1BED6EA4009863DC /* JCDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDownloader.m; sourceTree = "<group>"; };
 		35ECBD271BEB2CC100C2A5FC /* JCBrowser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JCBrowser.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -190,6 +193,8 @@
 				35ECBD691BEB2CE900C2A5FC /* JCBarView.m */,
 				35ECBD851BEB4B9600C2A5FC /* JCFilesTable.h */,
 				35ECBD861BEB4B9600C2A5FC /* JCFilesTable.m */,
+				356B8B081BEE690F0006123E /* JCFilesTableCell.h */,
+				356B8B091BEE690F0006123E /* JCFilesTableCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -381,6 +386,7 @@
 				35ECBD811BEB42D900C2A5FC /* JCFileShowController.m in Sources */,
 				35ECBD751BEB3B8C00C2A5FC /* JCFileDownloader.m in Sources */,
 				35ECBD2C1BEB2CC100C2A5FC /* main.m in Sources */,
+				356B8B0A1BEE690F0006123E /* JCFilesTableCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

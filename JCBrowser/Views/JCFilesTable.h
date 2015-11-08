@@ -23,6 +23,12 @@
 
 @property (nonatomic, weak) id<JCFilesTableDelegate> delegate;
 
+@property (nonatomic, strong) NSMutableArray *multi_selective_array;
+
+@property (nonatomic, assign) BOOL multi_selective;
+
+@property (nonatomic, assign) BOOL selectAll;
+
 - (instancetype)initWithFrame:(CGRect)frame files:(NSMutableArray *)array;
 
 /**

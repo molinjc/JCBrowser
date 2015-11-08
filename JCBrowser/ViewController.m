@@ -17,14 +17,16 @@
 
 #import "JCDownloader.h"
 
-@interface ViewController ()<JCBarViewDelegate,UIWebViewDelegate,NSURLConnectionDelegate,UIGestureRecognizerDelegate>
+@interface ViewController ()<JCBarViewDelegate,UIWebViewDelegate,NSURLConnectionDelegate,UIGestureRecognizerDelegate,UITableViewDataSource,UITableViewDelegate>
 
 @property (nonatomic, strong) JCBarView               *barview;
 @property (nonatomic, strong) UIWebView               *webview;
 @property (nonatomic, strong) UIButton                *hideButton;
 @property (nonatomic, strong) UIButton                *holdUrl;
+@property (nonatomic, strong) UITableView             *bookmark;
 @property (nonatomic, assign) BOOL                     isTo;
 @property (nonatomic, copy)   NSString                *name;
+@property (nonatomic, strong) NSMutableArray          *bookmarkArray;
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
 
 @end
@@ -38,6 +40,7 @@
     [self.view addSubview:self.activityIndicator];
     [self.webview addSubview:self.hideButton];
     [self.webview addSubview:self.holdUrl];
+    [self.view addSubview:self.bookmark];
     self.isTo = NO;
     self.name = @"";
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.baidu.com"]];
@@ -238,9 +241,14 @@
 }
 
 - (void)holdUrl_action:(UIButton *)sender {
-    JCFileManager *fileManager = [JCFileManager sharedFileManager];
-    if ([fileManager writeFile:@"holdUrl.txt" andData:self.webview.request.URL.absoluteString]) {
-        [AlertHelper showOneSecond:@"写入成功！" andDelegate:self.view];
+    if (self.bookmark.frame.origin.y == 64) {
+        [UIView animateWithDuration:1 animations:^{
+            self.bookmark.frame = CGRectMake(0, -self.view.frame.size.height*0.25, self.view.frame.size.width, self.view.frame.size.height*0.25);
+        }];
+    }else {
+        [UIView animateWithDuration:1 animations:^{
+            self.bookmark.frame = CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height*0.25);
+        }];
     }
 }
 
@@ -263,6 +271,45 @@
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
     return YES;
+}
+
+#pragma mark - UITableViewDataSource,UITableViewDelegate
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.bookmarkArray.count+1;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    if (!cell) {
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+        
+        if (indexPath.row == 0) {
+            cell.textLabel.text = @"点击保存书签";
+        }else {
+            cell.textLabel.text = self.bookmarkArray[indexPath.row-1];
+        }
+    }
+    return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 35;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == 0) {
+        JCFileManager *fileManager = [JCFileManager sharedFileManager];
+        if ([fileManager writeFile:@"holdUrl.txt" andData:self.webview.request.URL.absoluteString]) {
+            [AlertHelper showOneSecond:@"写入成功！" andDelegate:self.view];
+        }
+    }else {
+        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:self.bookmarkArray[indexPath.row]]];
+        [self.webview loadRequest:request];
+    }
+    [UIView animateWithDuration:1 animations:^{
+        tableView.frame = CGRectMake(0, -self.view.frame.size.height*0.25, self.view.frame.size.width, self.view.frame.size.height*0.25);
+    }];
 }
 
 
@@ -319,6 +366,22 @@
     return _holdUrl;
 }
 
+- (UITableView *)bookmark {
+    if (!_bookmark) {
+        _bookmark = [[UITableView alloc]initWithFrame:CGRectMake(0, -self.view.frame.size.height*0.25, self.view.frame.size.width, self.view.frame.size.height*0.25) style:UITableViewStylePlain];
+        _bookmark.backgroundColor = [UIColor whiteColor];
+        _bookmark.delegate = self;
+        _bookmark.dataSource = self;
+    }
+    return _bookmark;
+}
+
+- (NSMutableArray *)bookmarkArray {
+    if (!_bookmarkArray) {
+        _bookmarkArray = [[JCFileManager sharedFileManager] readFile:@"holdUrl.txt"];
+    }
+    return _bookmarkArray;
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

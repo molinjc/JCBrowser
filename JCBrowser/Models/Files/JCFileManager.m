@@ -140,17 +140,12 @@ static JCFileManager *fileManager = nil;
  *
  *  @return 内容
  */
-- (NSString *)readFile:(NSString *)file andDirectory:(NSString *)directory{
+- (NSMutableArray *)readFile:(NSString *)file {
     NSString *documentsPath = [self getDocumentsPath];
-    NSString *filePath;
-    if (directory != nil) {
-        filePath = [NSString stringWithFormat:@"%@/%@",directory,file];
-    }else{
-        filePath = file;
-    }
-    NSString *iOSPath = [documentsPath stringByAppendingPathComponent:filePath];
-    NSString *contents = [NSString stringWithContentsOfFile:iOSPath encoding:NSUTF8StringEncoding error:nil];
-    return contents;
+    NSString *filePath = [documentsPath stringByAppendingPathComponent:file];
+    NSString *myString = [NSString stringWithContentsOfFile:filePath usedEncoding:NULL error:NULL];
+    NSArray *fileArray = [myString componentsSeparatedByString:@","];
+    return [NSMutableArray arrayWithArray:fileArray];
 }
 /**
  *  判断文件是否存在

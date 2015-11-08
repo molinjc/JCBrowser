@@ -24,6 +24,8 @@
 @property (nonatomic, assign) NSInteger        fileIndex;
 @property (nonatomic, copy)   NSString        *filePath;
 @property (nonatomic, strong) UIBarButtonItem *item;
+@property (nonatomic, strong) UIBarButtonItem *deleteItem;
+@property (nonatomic, strong) UIBarButtonItem *selectItem;
 @property (nonatomic, strong) UIButton        *delete;
 
 @end
@@ -73,10 +75,14 @@
 #pragma mark - JCFilesTableDelegate
 
 - (void)selecedIndex:(NSInteger)index {
-    self.fileIndex = index;
-    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"确定删除？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-    alertView.tag = 102;
-    [alertView show];
+    self.deleteItem.title = @"删除";
+    self.selectItem.title = @"全选";
+    
+    
+//    self.fileIndex = index;
+//    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"确定删除？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+//    alertView.tag = 102;
+//    [alertView show];
 }
 
 - (void)seeIndex:(NSInteger)index {
@@ -140,6 +146,29 @@
     }
 }
 
+- (void)deleteItem_action:(UIBarButtonItem *)sender {
+    if ([sender.title isEqualToString:@"删除"]) {
+        for (int i=0; i<self.filesTable.multi_selective_array.count; i++) {
+            NSInteger index = [self.filesTable.multi_selective_array[i] integerValue];
+            NSString *path = self.filesArray[index][JCFilesTable_PATH];
+            [self.fileManager deleteFile:path];
+        }
+        [self obtainFilesArray];
+        sender.title = @"";
+        self.selectItem.title = @"";
+        self.filesTable.multi_selective = NO;
+        self.filesTable.selectAll = NO;
+        [self.filesTable reloadFiles:self.filesArray];
+        [self.imageSee reloadImageViewWithImageArray:self.imageArray];
+    }
+}
+
+- (void)selectItem_action:(UIBarButtonItem *)sender {
+    if ([sender.title isEqualToString:@"全选"]) {
+        self.filesTable.selectAll = YES;
+    }
+}
+
 - (void)delete_action:(UIButton *)sender {
     BOOL isd = [self.fileManager deleteFile:self.imageSee.dic[@"image"]];
     if (isd) {
@@ -155,7 +184,10 @@
 
 - (void)createNavigationWithBarButtonItem {
     self.item = [[UIBarButtonItem alloc]initWithTitle:@"相册" style:UIBarButtonItemStyleDone target:self action:@selector(item_sction:)];
-    self.navigationItem.rightBarButtonItem = self.item;
+    //self.navigationItem.rightBarButtonItem = self.item;
+    self.deleteItem = [[UIBarButtonItem alloc]initWithTitle:@"" style:UIBarButtonItemStyleDone target:self action:@selector(deleteItem_action:)];//@"删除"
+    self.selectItem = [[UIBarButtonItem alloc]initWithTitle:@"" style:UIBarButtonItemStyleDone target:self action:@selector(selectItem_action:)]; //@"全选"
+    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:self.item,self.deleteItem,self.selectItem, nil];
 }
 
 - (JCImageSeeView *)imageSee {

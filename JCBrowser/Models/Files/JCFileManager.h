@@ -75,7 +75,7 @@
  *
  *  @return 内容
  */
-- (NSString *)readFile:(NSString *)file andDirectory:(NSString *)directory;
+ - (NSMutableArray *)readFile:(NSString *)file;
 /**
  *  判断文件是否存在
  *
