@@ -22,6 +22,7 @@
 @property(nonatomic,strong)UILabel *lblInfo;//图片描述
 @property(nonatomic,strong)UIView  *leftview;
 @property(nonatomic,strong)UIView  *rightview;
+@property(nonatomic,strong)UILabel *lbl_error;
 @property(nonatomic,weak)id<JCImageSeeViewDelegate> delegate;
 
 /**

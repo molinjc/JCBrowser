@@ -30,6 +30,8 @@
         [self creatLabel];
         
         [self createClickView];
+        
+        [self addSubview:self.lbl_error];
     }
     return self;
 }
@@ -175,6 +177,10 @@
  */
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
 
+    if (!self.lbl_error.hidden) {
+        self.lbl_error.hidden = !self.lbl_error.hidden;
+    }
+    
     CGPoint cu = [[touches anyObject]locationInView:self];//获取触摸点在图片视图的坐标
     //判断触摸点在哪边
     if (CGRectContainsPoint(self.rightview.frame, cu))  {
@@ -208,24 +214,44 @@
  */
 - (void)setImageViewFrameWithPath:(NSString *)path {
     UIImage *image = [self imageWithPath:path];//重新给图片视图指定图片
+    
+    if (!image) {
+        self.lbl_error.hidden = NO;
+        self.lbl_error.text = [NSString stringWithFormat:@"该文件无内容"];
+    }
+    
     CGFloat width = self.frame.size.width;
     CGFloat height = self.frame.size.height;
     CGFloat multiple = 0;
     if (image.size.width < width) {
         width = image.size.width;
+        if (image.size.height < height) {
+            height = image.size.height;
+        }else {
+            multiple = image.size.width / width + 0.35;
+            width = image.size.width / multiple;
+            height = image.size.height / multiple;
+        }
     }else {
-        multiple = image.size.width / width + 0.5;
+        multiple = image.size.width / width + 0.35;
         width = image.size.width / multiple;
-    }
-    if (image.size.height < height) {
-        height = image.size.height;
-    }else {
         height = image.size.height / multiple;
     }
+   
     
     self.imgV.frame = CGRectMake(0, 0, width, height);
-    self.imgV.center = CGPointMake(self.center.x, self.center.y-30);
+    self.imgV.center = CGPointMake(self.center.x, self.center.y-60);
     self.imgV.image = image;
+}
+
+- (UILabel *)lbl_error {
+    if (!_lbl_error) {
+        _lbl_error = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 150, 50)];
+        _lbl_error.center = self.center;
+        _lbl_error.textColor = [UIColor whiteColor];
+        _lbl_error.hidden = YES;
+    }
+    return _lbl_error;
 }
 
 /*

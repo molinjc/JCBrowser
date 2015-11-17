@@ -24,10 +24,10 @@
 - (instancetype)initWithFrame:(CGRect)frame files:(NSMutableArray *)array {
     if (self = [super initWithFrame:frame]) {
         self.multi_selective = NO;
-        self.multi_selective_array = [NSMutableArray new];
-        [self addSubview:self.table];
         self.files = [NSMutableArray new];
         self.files = array;
+        self.multi_selective_array = [NSMutableArray new];
+        [self addSubview:self.table];
     }
     return self;
 }
@@ -46,7 +46,7 @@
         [self.table removeFromSuperview];
         self.table = nil;
         [self addSubview:self.table];
-        [self.multi_selective_array addObject:[NSString stringWithFormat:@"%ld",sender.view.tag]];
+        [self.multi_selective_array addObject:[NSString stringWithFormat:@"%d",sender.view.tag]];
         JCFilesTableCell *cell = (JCFilesTableCell *)sender.view;
         [self.table reloadData];
         cell.cell_selected = YES;
@@ -59,9 +59,9 @@
     if (self.multi_selective) {
         JCFilesTableCell *cell = [tableView cellForRowAtIndexPath:indexPath];
         if (!cell.cell_selected) {
-            [self.multi_selective_array addObject:[NSString stringWithFormat:@"%ld",indexPath.row]];
+            [self.multi_selective_array addObject:[NSString stringWithFormat:@"%ld",(long)indexPath.row]];
         }else {
-            [self.multi_selective_array removeObject:[NSString stringWithFormat:@"%ld",indexPath.row]];
+            [self.multi_selective_array removeObject:[NSString stringWithFormat:@"%ld",(long)indexPath.row]];
         }
         cell.cell_selected = !cell.cell_selected;
     }else {
@@ -75,21 +75,39 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    JCFilesTableCell *cell = [tableView dequeueReusableCellWithIdentifier:[NSString stringWithFormat:@"cell%ld",(long)indexPath.row]];
-    if (!cell) {
-        cell = [[JCFilesTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[NSString stringWithFormat:@"cell%ld",(long)indexPath.row] frame:CGRectMake(0, 0, self.frame.size.width, 40)];
-        cell.title.text = self.files[indexPath.row][JCFilesTable_TITLE];
-        cell.filesize.text = [NSString stringWithFormat:@"文件大小：%@",self.files[indexPath.row][JCFilesTable_SIZE]];
-        NSArray *postfixArr = [self.files[indexPath.row][JCFilesTable_PATH] componentsSeparatedByString:@"."];
-        if (postfixArr.count>1) {
-            NSString *postfix = postfixArr[1];
-            if ([postfix isEqualToString:@"png"] || [postfix isEqualToString:@"jpg"] || [postfix isEqualToString:@"gif"] || [postfix isEqualToString:@"bmp"]) {
-                NSFileManager *fileManage = [NSFileManager defaultManager];
-                cell.imageview.image = [UIImage imageWithData:[fileManage contentsAtPath:self.files[indexPath.row][JCFilesTable_PATH]]];
+    static NSString *reuseIdentifier = @"cell";//[NSString stringWithFormat:@"cell%ld",(long)indexPath.row];
+    JCFilesTableCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
+    if (cell == nil) {
+        
+        cell = [[JCFilesTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier frame:CGRectMake(0, 0, self.frame.size.width, 40)];
+     }
+    cell.title.text = self.files[indexPath.row][JCFilesTable_TITLE];
+    cell.filesize.text = [NSString stringWithFormat:@"文件大小：%@",self.files[indexPath.row][JCFilesTable_SIZE]];
+    
+    NSArray *postfixArr = [self.files[indexPath.row][JCFilesTable_PATH] componentsSeparatedByString:@"."];
+    
+    if (postfixArr.count>1) {
+        
+        NSString *postfix = postfixArr[1];
+        
+        if ([postfix isEqualToString:@"png"] || [postfix isEqualToString:@"jpg"] || [postfix isEqualToString:@"gif"] || [postfix isEqualToString:@"bmp"]) {
+            
+            NSFileManager *fileManage = [NSFileManager defaultManager];
+            
+            UIImage *image = [UIImage imageWithData:[fileManage contentsAtPath:self.files[indexPath.row][JCFilesTable_PATH]]];
+            
+            if (image.size.width > self.frame.size.width) {
+                cell.imageview.image = [self imageWithImage:image scaledToSize:CGSizeMake(cell.imageview.frame.size.width, cell.imageview.frame.size.height)];
+            }else if (image.size.height > self.frame.size.height) {
+                cell.imageview.image = [self imageWithImage:image scaledToSize:CGSizeMake(cell.imageview.frame.size.width, cell.imageview.frame.size.height)];
             }else {
-                cell.imageview.image = [UIImage imageNamed:@"image_folder"];
+                cell.imageview.image = image;
             }
+            
+        }else {
+            cell.imageview.image = [UIImage imageNamed:@"image_folder"];
         }
+
         
         [cell isSelectedHidden:!self.multi_selective];
         cell.cell_selected = self.selectAll;
@@ -129,6 +147,27 @@
     }
     return _table;
 }
+
+
+-(UIImage*)imageWithImage:(UIImage*)image scaledToSize:(CGSize)newSize
+{
+    // Create a graphics image context
+    UIGraphicsBeginImageContext(newSize);
+    
+    // Tell the old image to draw in this new context, with the desired
+    // new size
+    [image drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
+    
+    // Get the new image from the context
+    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
+    
+    // End the context
+    UIGraphicsEndImageContext();
+    
+    // Return the new image.
+    return newImage;
+}
+
 
 /*
 // Only override drawRect: if you perform custom drawing.

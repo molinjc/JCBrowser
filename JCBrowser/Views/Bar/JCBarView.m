@@ -57,6 +57,11 @@
 
 #pragma mark - 控件代理
 
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    [textField setText:@""];
+}
+
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [self.delegate startEventWithAddress:textField.text];
     [textField resignFirstResponder];
