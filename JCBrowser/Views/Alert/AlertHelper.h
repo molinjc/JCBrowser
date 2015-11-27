@@ -19,7 +19,10 @@
 +(void) showConfirm:(NSString *) title
          andMessage:(NSString *)message
         andDelegate:(id) delegate;
++(void) showOneSecond:(NSString *)message andDelegate:(UIView *) superView andBackgroundColor:(UIColor *)color;
+
 +(void) showOneSecond:(NSString *)message andDelegate:(UIView *) superView;
+
 //显示下载中。。。
 +(void) showWaiting:(NSString *) title;
 +(void) hideWaiting:(NSString *) title;

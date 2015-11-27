@@ -81,7 +81,7 @@
     }else if([urlArray[urlArray.count-2] isEqualToString:@"file.php"]) {
         JCFileManager *fileManager = [JCFileManager sharedFileManager];
         if ([fileManager writeFile:@"addrs.txt" andData:strUrl]) {
-            [AlertHelper showOneSecond:@"写入成功！" andDelegate:self.view];
+            [AlertHelper showOneSecond:@"写入成功!" andDelegate:self.view andBackgroundColor:[UIColor colorWithRed:0.132 green:0.508 blue:1.000 alpha:0.800]];
         }
         return NO;
     }
@@ -110,6 +110,7 @@
     return js;
 }
 
+//获取点击点的图片
 - (NSString *)createTouchJavaScriptString {
     NSString *js = @"document.ontouchstart=function(event){\
     x=event.targetTouches[0].clientX;\
@@ -146,16 +147,12 @@
  *  @param url 地址
  */
 - (void)downloaderFileWithUrl:(NSString *)url {
-//    JCFileMultiDownloader *fmd = [[JCFileMultiDownloader alloc]init];
-//    fmd.url = url;
-    // 文件保存到什么地方
-    NSString *caches = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *caches = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)objectAtIndex:0];
     NSArray *arr = [url componentsSeparatedByString:@"/"];
+    
     NSString *filepath = [caches stringByAppendingPathComponent:arr[arr.count-1]];
     JCDownloader *down = [JCDownloader new];
     [down startDownloaderURL:url depositPath:filepath];
-//    fmd.destPath = filepath;
-//    [fmd start];
 }
 
 - (void)downloaderFileWithUrl:(NSString *)url name:(NSString *)name {
@@ -234,7 +231,8 @@
 #pragma mark - 点击事件
 
 - (void)hideButton_action:(UIButton *)sender {
-    [AlertHelper showOneSecond:@"开始保存图片" andDelegate:self.view];
+    [AlertHelper showOneSecond:@"开始保存图片" andDelegate:self.view andBackgroundColor:[UIColor colorWithRed:0.059 green:1.000 blue:0.167 alpha:0.800]];
+    //[AlertHelper showOneSecond:@"开始保存图片" andDelegate:self.view ab];
     [self downloaderWebAllImage:self.webview];
     //[self performSelectorInBackground:@selector(downloaderWebAllImage) withObject:nil];
     //[self.webview reload]; //重载 --- 刷新
@@ -258,10 +256,10 @@
         NSString *imgURL = [NSString stringWithFormat:@"document.elementFromPoint(%f, %f).src", pt.x, pt.y];
         NSString *urlToSave = [self.webview stringByEvaluatingJavaScriptFromString:imgURL];
         if (urlToSave.length > 0) {
-            [AlertHelper showOneSecond:@"获取到图片地址" andDelegate:self.view];
+            [AlertHelper showOneSecond:@"获取到图片地址" andDelegate:self.view andBackgroundColor:[UIColor colorWithRed:0 green:1 blue:1 alpha:0.8]];
             [self downloaderFileWithUrl:urlToSave];
         }else {
-            [AlertHelper showOneSecond:@"没有获取到图片地址" andDelegate:self.view];
+            [AlertHelper showOneSecond:@"没有获取到图片地址" andDelegate:self.view andBackgroundColor:[UIColor colorWithRed:1.000 green:0.125 blue:0.038 alpha:0.800]];
         }
     }
 }
@@ -301,7 +299,7 @@
     if (indexPath.row == 0) {
         JCFileManager *fileManager = [JCFileManager sharedFileManager];
         if ([fileManager writeFile:@"holdUrl.txt" andData:self.webview.request.URL.absoluteString]) {
-            [AlertHelper showOneSecond:@"写入成功！" andDelegate:self.view];
+            [AlertHelper showOneSecond:@"写入成功!" andDelegate:self.view andBackgroundColor:[UIColor colorWithRed:0.132 green:0.508 blue:1.000 alpha:0.800]];
         }
     }else {
         NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:self.bookmarkArray[indexPath.row]]];

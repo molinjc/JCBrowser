@@ -52,7 +52,7 @@
 - (void)obtainFilesArray {
     [self.filesArray removeAllObjects];
     [self.imageArray removeAllObjects];
-    NSMutableArray *array = [self.fileManager getCachesDirectory];
+    NSMutableArray *array = [self.fileManager getDocumentDirectory];   //[self.fileManager getCachesDirectory];
     for (int i=0; i<array.count; i++) {
         NSString *path = array[i];
         NSArray *strArray = [path componentsSeparatedByString:@"/"];
@@ -62,13 +62,16 @@
         [self.filesArray addObject:dic];
         
         NSArray *postfixArr = [fileName componentsSeparatedByString:@"."];
-        if (postfixArr.count>1) {
-            NSString *postfix = postfixArr[1];
-            if ([postfix isEqualToString:@"png"] || [postfix isEqualToString:@"jpg"] || [postfix isEqualToString:@"gif"] || [postfix isEqualToString:@"bmp"]) {
-                NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:path,@"image",postfixArr[0],@"info", nil];
-                [self.imageArray addObject:dic];
-            }
-        }
+        
+        NSDictionary *dic_image = [NSDictionary dictionaryWithObjectsAndKeys:path,@"image",postfixArr[0],@"info", nil];
+        [self.imageArray addObject:dic_image];
+        
+//        if (postfixArr.count>1) {
+//            NSString *postfix = postfixArr[1];
+//            if ([postfix isEqualToString:@"png"] || [postfix isEqualToString:@"jpg"] || [postfix isEqualToString:@"gif"] || [postfix isEqualToString:@"bmp"]) {
+//                
+//            }
+//        }
     }
 }
 
@@ -77,12 +80,6 @@
 - (void)selecedIndex:(NSInteger)index {
     self.deleteItem.title = @"删除";
     self.selectItem.title = @"全选";
-    
-    
-//    self.fileIndex = index;
-//    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"确定删除？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-//    alertView.tag = 102;
-//    [alertView show];
 }
 
 - (void)seeIndex:(NSInteger)index {

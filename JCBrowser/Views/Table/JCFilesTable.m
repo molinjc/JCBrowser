@@ -46,7 +46,7 @@
         [self.table removeFromSuperview];
         self.table = nil;
         [self addSubview:self.table];
-        [self.multi_selective_array addObject:[NSString stringWithFormat:@"%d",sender.view.tag]];
+        [self.multi_selective_array addObject:[NSString stringWithFormat:@"%ld",(long)sender.view.tag]];
         JCFilesTableCell *cell = (JCFilesTableCell *)sender.view;
         [self.table reloadData];
         cell.cell_selected = YES;
@@ -79,35 +79,35 @@
     JCFilesTableCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
     if (cell == nil) {
         
-        cell = [[JCFilesTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier frame:CGRectMake(0, 0, self.frame.size.width, 40)];
+        cell = [[JCFilesTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier frame:CGRectMake(0, 0, self.frame.size.width, 50)];
      }
     cell.title.text = self.files[indexPath.row][JCFilesTable_TITLE];
     cell.filesize.text = [NSString stringWithFormat:@"文件大小：%@",self.files[indexPath.row][JCFilesTable_SIZE]];
     
-    NSArray *postfixArr = [self.files[indexPath.row][JCFilesTable_PATH] componentsSeparatedByString:@"."];
+//    NSArray *postfixArr = [self.files[indexPath.row][JCFilesTable_PATH] componentsSeparatedByString:@"."];
+//    
+//    if (postfixArr.count>1) {
     
-    if (postfixArr.count>1) {
+//        NSString *postfix = postfixArr[1];
+//        
+//        if ([postfix isEqualToString:@"png"] || [postfix isEqualToString:@"jpg"] || [postfix isEqualToString:@"gif"] || [postfix isEqualToString:@"bmp"]) {
         
-        NSString *postfix = postfixArr[1];
-        
-        if ([postfix isEqualToString:@"png"] || [postfix isEqualToString:@"jpg"] || [postfix isEqualToString:@"gif"] || [postfix isEqualToString:@"bmp"]) {
-            
             NSFileManager *fileManage = [NSFileManager defaultManager];
             
             UIImage *image = [UIImage imageWithData:[fileManage contentsAtPath:self.files[indexPath.row][JCFilesTable_PATH]]];
-            
-            if (image.size.width > self.frame.size.width) {
-                cell.imageview.image = [self imageWithImage:image scaledToSize:CGSizeMake(cell.imageview.frame.size.width, cell.imageview.frame.size.height)];
-            }else if (image.size.height > self.frame.size.height) {
-                cell.imageview.image = [self imageWithImage:image scaledToSize:CGSizeMake(cell.imageview.frame.size.width, cell.imageview.frame.size.height)];
-            }else {
-                cell.imageview.image = image;
-            }
-            
+    if (image) {
+        
+        if (image.size.width > self.frame.size.width) {
+            cell.imageview.image = [self imageWithImage:image scaledToSize:CGSizeMake(cell.imageview.frame.size.width, cell.imageview.frame.size.height)];
+        }else if (image.size.height > self.frame.size.height) {
+            cell.imageview.image = [self imageWithImage:image scaledToSize:CGSizeMake(cell.imageview.frame.size.width, cell.imageview.frame.size.height)];
         }else {
-            cell.imageview.image = [UIImage imageNamed:@"image_folder"];
+            cell.imageview.image = image;
         }
 
+    }else {
+        cell.imageview.image = [UIImage imageNamed:@"image_folder"];
+    }
         
         [cell isSelectedHidden:!self.multi_selective];
         cell.cell_selected = self.selectAll;
@@ -116,12 +116,12 @@
         cell.tag = indexPath.row;
 //        [doubleTap setNumberOfTapsRequired:2];
         [cell addGestureRecognizer:longPressGestureRecognizer];
-    }
+//    }
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 40;
+    return 50;
 }
 
 - (void)setSelectAll:(BOOL)selectAll {
@@ -144,6 +144,7 @@
         _table = [[UITableView alloc]initWithFrame:self.bounds style:UITableViewStylePlain];
         _table.delegate = self;
         _table.dataSource = self;
+        [_table reloadData];
     }
     return _table;
 }

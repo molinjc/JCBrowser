@@ -15,6 +15,18 @@
 
 @implementation AppDelegate
 
+/**
+ *  设置横屏
+ *
+ *  @param application 应用
+ *  @param window      窗口
+ *
+ *  @return 设置不能横屏
+ */
+- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
+    
+    return UIInterfaceOrientationMaskPortrait;
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     

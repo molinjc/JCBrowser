@@ -55,6 +55,27 @@ static JCFileManager *fileManager = nil;
 }
 
 /**
+ *  获取DocumentDirectory文件夹的所有文件
+ */
+- (NSMutableArray *)getDocumentDirectory {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *path = [paths objectAtIndex:0];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSArray *arr_home = [fileManager subpathsAtPath:path];
+    NSMutableArray *fileArray = [NSMutableArray new];
+    for (int i=0; i<arr_home.count; i++) {
+        BOOL isFile = NO;
+        NSString *path_a = arr_home[i];
+        [fileManager fileExistsAtPath:path_a isDirectory:(&isFile)];
+        if (!isFile) {
+            [fileArray addObject:[NSString stringWithFormat:@"%@/%@",path,path_a]];
+        }
+    }
+    return fileArray;
+
+}
+
+/**
  *  判断是否是文件
  *
  *  @param file 文件名
@@ -132,6 +153,8 @@ static JCFileManager *fileManager = nil;
     BOOL isSuccess = [str writeToFile:filePath atomically:YES encoding:NSUTF8StringEncoding error:nil];
     return isSuccess;
 }
+
+
 /**
  *  读取文件
  *

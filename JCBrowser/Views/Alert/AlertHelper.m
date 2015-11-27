@@ -60,10 +60,10 @@
  *  @param message   提示消息
  *  @param superView 要显示的视图
  */
-+(void) showOneSecond:(NSString *)message andDelegate:(UIView *) superView
++(void) showOneSecond:(NSString *)message andDelegate:(UIView *) superView andBackgroundColor:(UIColor *)color
 {
     UIView *v=[[UIView alloc]initWithFrame:CGRectMake(superView.center.x-80, superView.frame.size.height*0.8, 160, 40)];
-    v.backgroundColor=[UIColor colorWithRed:0 green:1 blue:1 alpha:0.8];
+    v.backgroundColor= color;
   
     v.layer.cornerRadius=7;
     
@@ -81,6 +81,30 @@
     
     [self  performSelectorOnMainThread:@selector(stop:) withObject:v waitUntilDone:YES];
 }
+
++(void) showOneSecond:(NSString *)message andDelegate:(UIView *) superView
+{
+    UIView *v=[[UIView alloc]initWithFrame:CGRectMake(superView.center.x-80, superView.frame.size.height*0.8, 160, 40)];
+    v.backgroundColor= [UIColor greenColor];
+    
+    v.layer.cornerRadius=7;
+    
+    
+    UILabel *lbl=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 160, 40)];
+    lbl.tintColor=[UIColor blackColor];
+    
+    lbl.text=message;
+    
+    lbl.font=[UIFont systemFontOfSize:13];
+    lbl.textAlignment=NSTextAlignmentCenter;
+    [v  addSubview:lbl];
+    
+    [superView  performSelectorOnMainThread:@selector(addSubview:) withObject:v waitUntilDone:YES];
+    
+    [self  performSelectorOnMainThread:@selector(stop:) withObject:v waitUntilDone:YES];
+}
+
+
 /**
  *  1s移除
  *

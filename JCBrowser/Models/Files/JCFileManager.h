@@ -29,6 +29,10 @@
  */
 - (NSMutableArray *)getCachesDirectory;
 
+/**
+ *  获取DocumentDirectory文件夹的所有文件
+ */
+- (NSMutableArray *)getDocumentDirectory;
 
 /**
  *  判断是否是文件

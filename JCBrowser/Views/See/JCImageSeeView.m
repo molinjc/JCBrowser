@@ -138,7 +138,11 @@
     self.lblTally = [[UILabel alloc]initWithFrame:CGRectMake(0, 8, self.frame.size.width, 20)];
     self.lblTally.textAlignment = NSTextAlignmentCenter;
     
-    self.lblTally.text = [NSString stringWithFormat:@"%ld/%lu",self.tally+1,(unsigned long)self.arrImage.count,nil];
+    if (self.arrImage.count > 0) {
+        self.lblTally.text = [NSString stringWithFormat:@"%ld/%lu",self.tally+1,(unsigned long)self.arrImage.count,nil];
+    }else {
+        self.lblTally.text = @"0/0";
+    }
     
     self.lblTally.textColor = [UIColor whiteColor];
     
@@ -181,29 +185,33 @@
         self.lbl_error.hidden = !self.lbl_error.hidden;
     }
     
-    CGPoint cu = [[touches anyObject]locationInView:self];//获取触摸点在图片视图的坐标
-    //判断触摸点在哪边
-    if (CGRectContainsPoint(self.rightview.frame, cu))  {
-        //判断下标值
-        if (self.tally == self.arrImage.count-1) {
-            self.tally = 0;
-        }else{
-            self.tally += 1;
+    if (self.imgV.userInteractionEnabled) {
+        
+        CGPoint cu = [[touches anyObject]locationInView:self];//获取触摸点在图片视图的坐标
+        //判断触摸点在哪边
+        if (CGRectContainsPoint(self.rightview.frame, cu))  {
+            //判断下标值
+            if (self.tally == self.arrImage.count-1) {
+                self.tally = 0;
+            }else{
+                self.tally += 1;
+            }
+            self.dic = self.arrImage[self.tally];//获取字典
+            [self setImageViewFrameWithPath:self.dic[@"image"]];
+            self.lblTally.text = [NSString stringWithFormat:@"%ld/%lu",self.tally+1,(unsigned long)self.arrImage.count];
+            self.lblInfo.text = self.dic[@"info"];
+        }else if (CGRectContainsPoint(self.leftview.frame, cu)) {
+            if (self.tally == 0) {
+                self.tally =self.arrImage.count-1;
+            }else{
+                self.tally -= 1;
+            }
+            self.dic = self.arrImage[self.tally];
+            [self setImageViewFrameWithPath:self.dic[@"image"]];
+            self.lblTally.text = [NSString stringWithFormat:@"%ld/%lu",self.tally+1,(unsigned long)self.arrImage.count];
+            self.lblInfo.text = self.dic[@"info"];
         }
-        self.dic = self.arrImage[self.tally];//获取字典
-        [self setImageViewFrameWithPath:self.dic[@"image"]];
-        self.lblTally.text = [NSString stringWithFormat:@"%ld/%lu",self.tally+1,(unsigned long)self.arrImage.count];
-        self.lblInfo.text = self.dic[@"info"];
-    }else if (CGRectContainsPoint(self.leftview.frame, cu)) {
-        if (self.tally == 0) {
-            self.tally =self.arrImage.count-1;
-        }else{
-           self.tally -= 1;
-        }
-        self.dic = self.arrImage[self.tally];
-        [self setImageViewFrameWithPath:self.dic[@"image"]];
-        self.lblTally.text = [NSString stringWithFormat:@"%ld/%lu",self.tally+1,(unsigned long)self.arrImage.count];
-        self.lblInfo.text = self.dic[@"info"];
+        
     }
 }
 

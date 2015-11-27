@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3571FC8E1BED6EA4009863DC /* JCDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 3571FC8D1BED6EA4009863DC /* JCDownloader.m */; settings = {ASSET_TAGS = (); }; };
+		35800B361BFB8EA700FFEA2E /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 35800B351BFB8EA700FFEA2E /* icon.png */; settings = {ASSET_TAGS = (); }; };
 		35C9082E1BFAE541003D5B9F /* JCBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 35C9082D1BFAE541003D5B9F /* JCBarView.m */; settings = {ASSET_TAGS = (); }; };
 		35C908311BFAE54B003D5B9F /* AlertHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 35C908301BFAE54B003D5B9F /* AlertHelper.m */; settings = {ASSET_TAGS = (); }; };
 		35C908341BFAE56B003D5B9F /* JCImageSeeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 35C908331BFAE56B003D5B9F /* JCImageSeeView.m */; settings = {ASSET_TAGS = (); }; };
@@ -49,6 +50,7 @@
 /* Begin PBXFileReference section */
 		3571FC8C1BED6EA4009863DC /* JCDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCDownloader.h; sourceTree = "<group>"; };
 		3571FC8D1BED6EA4009863DC /* JCDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDownloader.m; sourceTree = "<group>"; };
+		35800B351BFB8EA700FFEA2E /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		35C9082C1BFAE541003D5B9F /* JCBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCBarView.h; sourceTree = "<group>"; };
 		35C9082D1BFAE541003D5B9F /* JCBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCBarView.m; sourceTree = "<group>"; };
 		35C9082F1BFAE54B003D5B9F /* AlertHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertHelper.h; sourceTree = "<group>"; };
@@ -185,6 +187,7 @@
 		35ECBD2A1BEB2CC100C2A5FC /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				35800B351BFB8EA700FFEA2E /* icon.png */,
 				35C908471BFAE6C8003D5B9F /* Info.plist */,
 				35C908421BFAE5EC003D5B9F /* main.m */,
 				35ECBD331BEB2CC100C2A5FC /* Main.storyboard */,
@@ -380,6 +383,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				35C908481BFAE6C8003D5B9F /* Info.plist in Resources */,
+				35800B361BFB8EA700FFEA2E /* icon.png in Resources */,
 				35ECBD3A1BEB2CC200C2A5FC /* LaunchScreen.storyboard in Resources */,
 				35ECBD371BEB2CC200C2A5FC /* Assets.xcassets in Resources */,
 				35ECBD351BEB2CC100C2A5FC /* Main.storyboard in Resources */,
