@@ -11,6 +11,7 @@
 
 #import "JCBarView.h"
 #import "AlertHelper.h"
+#import "JCProgressBarView.h"
 
 #import "JCFileMultiDownloader.h"
 #import "JCFileManager.h"
@@ -20,6 +21,7 @@
 @interface ViewController ()<JCBarViewDelegate,UIWebViewDelegate,NSURLConnectionDelegate,UIGestureRecognizerDelegate,UITableViewDataSource,UITableViewDelegate>
 
 @property (nonatomic, strong) JCBarView               *barview;
+@property (nonatomic, strong) JCProgressBarView       *progressBarView;
 @property (nonatomic, strong) UIWebView               *webview;
 @property (nonatomic, strong) UIButton                *hideButton;
 @property (nonatomic, strong) UIButton                *holdUrl;
@@ -36,6 +38,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view addSubview:self.barview];
+    [self.view addSubview:self.progressBarView];
     [self.view addSubview:self.webview];
     [self.view addSubview:self.activityIndicator];
     [self.webview addSubview:self.hideButton];
@@ -135,6 +138,8 @@
 - (void)downloaderWebAllImage:(UIWebView *)webView { // [self performSelectorInBackground:@selector(test) withObject:nil];
     NSString *allImageAddressWithString = [webView stringByEvaluatingJavaScriptFromString:[self createImgArrayJavaScript]];
     NSArray *allImageAddressWithArray = [allImageAddressWithString componentsSeparatedByString:@";"];
+    
+    self.progressBarView.image_quantity_get = (int)allImageAddressWithArray.count;
     
     for (int i=0; i<allImageAddressWithArray.count; i++) {
         [self downloaderFileWithUrl:allImageAddressWithArray[i]];
@@ -321,9 +326,16 @@
     return _barview;
 }
 
+- (JCProgressBarView *)progressBarView {
+    if (!_progressBarView) {
+        _progressBarView = [[JCProgressBarView alloc]initWithPlace:CGPointMake(0, self.view.frame.size.height-50)];
+    }
+    return _progressBarView;
+}
+
 - (UIWebView *)webview {
     if (!_webview) {
-        _webview = [[UIWebView alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-64)];
+        _webview = [[UIWebView alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-64-self.progressBarView.frame.size.height)];
         _webview.delegate = self;
         _webview.scalesPageToFit = YES;//自动对页面进行缩放以适应屏幕
         // _webview.detectsPhoneNumbers = YES;//自动检测网页上的电话号码，单击可以拨打

@@ -7,27 +7,29 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3571FC8E1BED6EA4009863DC /* JCDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 3571FC8D1BED6EA4009863DC /* JCDownloader.m */; settings = {ASSET_TAGS = (); }; };
-		35800B361BFB8EA700FFEA2E /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 35800B351BFB8EA700FFEA2E /* icon.png */; settings = {ASSET_TAGS = (); }; };
-		35C9082E1BFAE541003D5B9F /* JCBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 35C9082D1BFAE541003D5B9F /* JCBarView.m */; settings = {ASSET_TAGS = (); }; };
-		35C908311BFAE54B003D5B9F /* AlertHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 35C908301BFAE54B003D5B9F /* AlertHelper.m */; settings = {ASSET_TAGS = (); }; };
-		35C908341BFAE56B003D5B9F /* JCImageSeeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 35C908331BFAE56B003D5B9F /* JCImageSeeView.m */; settings = {ASSET_TAGS = (); }; };
-		35C908391BFAE57D003D5B9F /* JCFilesTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 35C908361BFAE57D003D5B9F /* JCFilesTable.m */; settings = {ASSET_TAGS = (); }; };
-		35C9083A1BFAE57D003D5B9F /* JCFilesTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 35C908381BFAE57D003D5B9F /* JCFilesTableCell.m */; settings = {ASSET_TAGS = (); }; };
-		35C9083D1BFAE5C8003D5B9F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35C9083C1BFAE5C8003D5B9F /* ViewController.m */; settings = {ASSET_TAGS = (); }; };
-		35C908401BFAE5DA003D5B9F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 35C9083F1BFAE5DA003D5B9F /* AppDelegate.m */; settings = {ASSET_TAGS = (); }; };
-		35C908441BFAE5EC003D5B9F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 35C908421BFAE5EC003D5B9F /* main.m */; settings = {ASSET_TAGS = (); }; };
-		35C908481BFAE6C8003D5B9F /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 35C908471BFAE6C8003D5B9F /* Info.plist */; settings = {ASSET_TAGS = (); }; };
+		3541072E1C0A019900CB5A98 /* JCProgressBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3541072D1C0A019900CB5A98 /* JCProgressBarView.m */; };
+		354107321C0A020700CB5A98 /* UIView+Coordinate.m in Sources */ = {isa = PBXBuildFile; fileRef = 354107311C0A020700CB5A98 /* UIView+Coordinate.m */; };
+		3571FC8E1BED6EA4009863DC /* JCDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 3571FC8D1BED6EA4009863DC /* JCDownloader.m */; };
+		35800B361BFB8EA700FFEA2E /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 35800B351BFB8EA700FFEA2E /* icon.png */; };
+		35C9082E1BFAE541003D5B9F /* JCBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 35C9082D1BFAE541003D5B9F /* JCBarView.m */; };
+		35C908311BFAE54B003D5B9F /* AlertHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 35C908301BFAE54B003D5B9F /* AlertHelper.m */; };
+		35C908341BFAE56B003D5B9F /* JCImageSeeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 35C908331BFAE56B003D5B9F /* JCImageSeeView.m */; };
+		35C908391BFAE57D003D5B9F /* JCFilesTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 35C908361BFAE57D003D5B9F /* JCFilesTable.m */; };
+		35C9083A1BFAE57D003D5B9F /* JCFilesTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 35C908381BFAE57D003D5B9F /* JCFilesTableCell.m */; };
+		35C9083D1BFAE5C8003D5B9F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35C9083C1BFAE5C8003D5B9F /* ViewController.m */; };
+		35C908401BFAE5DA003D5B9F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 35C9083F1BFAE5DA003D5B9F /* AppDelegate.m */; };
+		35C908441BFAE5EC003D5B9F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 35C908421BFAE5EC003D5B9F /* main.m */; };
+		35CF16151C0C4DCA00D97DD8 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 35CF16141C0C4DCA00D97DD8 /* Info.plist */; };
 		35ECBD351BEB2CC100C2A5FC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 35ECBD331BEB2CC100C2A5FC /* Main.storyboard */; };
 		35ECBD371BEB2CC200C2A5FC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35ECBD361BEB2CC200C2A5FC /* Assets.xcassets */; };
 		35ECBD3A1BEB2CC200C2A5FC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 35ECBD381BEB2CC200C2A5FC /* LaunchScreen.storyboard */; };
 		35ECBD451BEB2CC200C2A5FC /* JCBrowserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 35ECBD441BEB2CC200C2A5FC /* JCBrowserTests.m */; };
 		35ECBD501BEB2CC200C2A5FC /* JCBrowserUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 35ECBD4F1BEB2CC200C2A5FC /* JCBrowserUITests.m */; };
-		35ECBD751BEB3B8C00C2A5FC /* JCFileDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 35ECBD701BEB3B8C00C2A5FC /* JCFileDownloader.m */; settings = {ASSET_TAGS = (); }; };
-		35ECBD761BEB3B8C00C2A5FC /* JCFileMultiDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 35ECBD721BEB3B8C00C2A5FC /* JCFileMultiDownloader.m */; settings = {ASSET_TAGS = (); }; };
-		35ECBD771BEB3B8C00C2A5FC /* JCFileSingDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 35ECBD741BEB3B8C00C2A5FC /* JCFileSingDownloader.m */; settings = {ASSET_TAGS = (); }; };
-		35ECBD7E1BEB419900C2A5FC /* JCFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 35ECBD7D1BEB419900C2A5FC /* JCFileManager.m */; settings = {ASSET_TAGS = (); }; };
-		35ECBD811BEB42D900C2A5FC /* JCFileShowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35ECBD801BEB42D900C2A5FC /* JCFileShowController.m */; settings = {ASSET_TAGS = (); }; };
+		35ECBD751BEB3B8C00C2A5FC /* JCFileDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 35ECBD701BEB3B8C00C2A5FC /* JCFileDownloader.m */; };
+		35ECBD761BEB3B8C00C2A5FC /* JCFileMultiDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 35ECBD721BEB3B8C00C2A5FC /* JCFileMultiDownloader.m */; };
+		35ECBD771BEB3B8C00C2A5FC /* JCFileSingDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 35ECBD741BEB3B8C00C2A5FC /* JCFileSingDownloader.m */; };
+		35ECBD7E1BEB419900C2A5FC /* JCFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 35ECBD7D1BEB419900C2A5FC /* JCFileManager.m */; };
+		35ECBD811BEB42D900C2A5FC /* JCFileShowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35ECBD801BEB42D900C2A5FC /* JCFileShowController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +50,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3541072C1C0A019900CB5A98 /* JCProgressBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCProgressBarView.h; sourceTree = "<group>"; };
+		3541072D1C0A019900CB5A98 /* JCProgressBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCProgressBarView.m; sourceTree = "<group>"; };
+		354107301C0A020700CB5A98 /* UIView+Coordinate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Coordinate.h"; sourceTree = "<group>"; };
+		354107311C0A020700CB5A98 /* UIView+Coordinate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Coordinate.m"; sourceTree = "<group>"; };
 		3571FC8C1BED6EA4009863DC /* JCDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCDownloader.h; sourceTree = "<group>"; };
 		3571FC8D1BED6EA4009863DC /* JCDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDownloader.m; sourceTree = "<group>"; };
 		35800B351BFB8EA700FFEA2E /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
@@ -66,14 +72,13 @@
 		35C9083E1BFAE5DA003D5B9F /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		35C9083F1BFAE5DA003D5B9F /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		35C908421BFAE5EC003D5B9F /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Files/main.m; sourceTree = "<group>"; };
-		35C908471BFAE6C8003D5B9F /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		35CF16141C0C4DCA00D97DD8 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		35ECBD271BEB2CC100C2A5FC /* JCBrowser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JCBrowser.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		35ECBD341BEB2CC100C2A5FC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		35ECBD361BEB2CC200C2A5FC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		35ECBD391BEB2CC200C2A5FC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		35ECBD401BEB2CC200C2A5FC /* JCBrowserTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JCBrowserTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		35ECBD441BEB2CC200C2A5FC /* JCBrowserTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JCBrowserTests.m; sourceTree = "<group>"; };
-		35ECBD461BEB2CC200C2A5FC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		35ECBD4B1BEB2CC200C2A5FC /* JCBrowserUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JCBrowserUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		35ECBD4F1BEB2CC200C2A5FC /* JCBrowserUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JCBrowserUITests.m; sourceTree = "<group>"; };
 		35ECBD511BEB2CC200C2A5FC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -114,6 +119,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3541072F1C0A01F300CB5A98 /* Expand */ = {
+			isa = PBXGroup;
+			children = (
+				354107301C0A020700CB5A98 /* UIView+Coordinate.h */,
+				354107311C0A020700CB5A98 /* UIView+Coordinate.m */,
+			);
+			path = Expand;
+			sourceTree = "<group>";
+		};
 		35C908251BFAE432003D5B9F /* See */ = {
 			isa = PBXGroup;
 			children = (
@@ -148,6 +162,8 @@
 			children = (
 				35C9082C1BFAE541003D5B9F /* JCBarView.h */,
 				35C9082D1BFAE541003D5B9F /* JCBarView.m */,
+				3541072C1C0A019900CB5A98 /* JCProgressBarView.h */,
+				3541072D1C0A019900CB5A98 /* JCProgressBarView.m */,
 			);
 			path = Bar;
 			sourceTree = "<group>";
@@ -175,6 +191,7 @@
 		35ECBD291BEB2CC100C2A5FC /* JCBrowser */ = {
 			isa = PBXGroup;
 			children = (
+				3541072F1C0A01F300CB5A98 /* Expand */,
 				35ECBD6D1BEB2D5000C2A5FC /* Othes */,
 				35ECBD6C1BEB2D3E00C2A5FC /* Controller */,
 				35ECBD671BEB2CE900C2A5FC /* Views */,
@@ -187,8 +204,8 @@
 		35ECBD2A1BEB2CC100C2A5FC /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				35CF16141C0C4DCA00D97DD8 /* Info.plist */,
 				35800B351BFB8EA700FFEA2E /* icon.png */,
-				35C908471BFAE6C8003D5B9F /* Info.plist */,
 				35C908421BFAE5EC003D5B9F /* main.m */,
 				35ECBD331BEB2CC100C2A5FC /* Main.storyboard */,
 				35ECBD361BEB2CC200C2A5FC /* Assets.xcassets */,
@@ -201,7 +218,6 @@
 			isa = PBXGroup;
 			children = (
 				35ECBD441BEB2CC200C2A5FC /* JCBrowserTests.m */,
-				35ECBD461BEB2CC200C2A5FC /* Info.plist */,
 			);
 			path = JCBrowserTests;
 			sourceTree = "<group>";
@@ -382,10 +398,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				35C908481BFAE6C8003D5B9F /* Info.plist in Resources */,
 				35800B361BFB8EA700FFEA2E /* icon.png in Resources */,
 				35ECBD3A1BEB2CC200C2A5FC /* LaunchScreen.storyboard in Resources */,
 				35ECBD371BEB2CC200C2A5FC /* Assets.xcassets in Resources */,
+				35CF16151C0C4DCA00D97DD8 /* Info.plist in Resources */,
 				35ECBD351BEB2CC100C2A5FC /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -420,6 +436,8 @@
 				35C908401BFAE5DA003D5B9F /* AppDelegate.m in Sources */,
 				35ECBD761BEB3B8C00C2A5FC /* JCFileMultiDownloader.m in Sources */,
 				35C908391BFAE57D003D5B9F /* JCFilesTable.m in Sources */,
+				3541072E1C0A019900CB5A98 /* JCProgressBarView.m in Sources */,
+				354107321C0A020700CB5A98 /* UIView+Coordinate.m in Sources */,
 				35ECBD811BEB42D900C2A5FC /* JCFileShowController.m in Sources */,
 				35ECBD751BEB3B8C00C2A5FC /* JCFileDownloader.m in Sources */,
 				35C908311BFAE54B003D5B9F /* AlertHelper.m in Sources */,
@@ -567,6 +585,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer: ZHANG YINGYAN (3SSJXR35S6)";
 				INFOPLIST_FILE = JCBrowser/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = molin.JCBrowser;
@@ -579,6 +598,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer: ZHANG YINGYAN (3SSJXR35S6)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: ZHANG YINGYAN (3SSJXR35S6)";
 				INFOPLIST_FILE = JCBrowser/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = molin.JCBrowser;
